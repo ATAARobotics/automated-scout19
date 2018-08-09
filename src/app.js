@@ -2,34 +2,45 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const tba = require('./tba');
 const pug = require('pug');
+const NodeCache = require("node-cache");
+
+const cache = new NodeCache();
 
 const router = new Router();
 
 //Views
 
 const addView = (path, view, getModel) => {
-    router.get(path, async (ctx) => {
-      const model = await getModel(ctx);
-      if (ctx.query.json == 'true') {
-        ctx.body = model; return;
-      } else {
-        ctx.body = pug.renderFile(`./views/${view}.pug`, model);
-      }
-    });
-  };
-
-addView('/', 'index',  async (ctx) => {
-  const events = await tba.get('/events/2018/simple');
-  const calendarEvents = [];
-  for (var item = 0, length = events.length; item < length; item++) {
-    var event = {
-      "title": events[item].name,
-      "start": events[item].start_date,
-      "end": events[item].end_date,
-      "url": `/events/${events[item].key}`
+  router.get(path, async (ctx) => {
+    const model = await getModel(ctx);
+    if (ctx.query.json == 'true') {
+      ctx.body = model; return;
+    } else {
+      ctx.body = pug.renderFile(`./views/${view}.pug`, model);
     }
-    calendarEvents.push(event);
+  });
+};
+
+addView('/', 'index', async (ctx) => {
+  const calendarEvents = [];
+  found = cache.get("eventCalendar");
+  if (found == undefined) {
+    const events = await tba.get('/events/2018/simple');
+
+    for (var item = 0, length = events.length; item < length; item++) {
+      var event = {
+        "title": events[item].name,
+        "start": events[item].start_date,
+        "end": events[item].end_date,
+        "url": `/events/${events[item].key}`
+      }
+      calendarEvents.push(event);
+    }
+    cache.set("calendarEvents", calendarEvents, 10000);
+  } else {
+    calendarEvents = found;
   }
+
   return { calendarEvents };
 
 });
