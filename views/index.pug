@@ -1,0 +1,15 @@
+extends header
+block content
+    #calendarEvents(style="display:none")= JSON.stringify(calendarEvents)
+    script.
+        $(function() {
+        // page is now ready, initialize the calendar...
+        var $records = $('#calendarEvents');
+        var events = JSON.parse($records.text());
+        $('#calendar').fullCalendar({
+            contentHeight: 800,
+            events: events
+        })
+        });
+
+    #calendar(style="margin-top: 15px;")

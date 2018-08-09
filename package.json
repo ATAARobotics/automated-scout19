@@ -1,0 +1,21 @@
+{
+  "name": "automated-scout19",
+  "version": "0.1.0",
+  "description": "Automated scouting and data analysis for ATA 4334",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node ./src/app.js",
+    "dev": "nodemon ./src/app.js"
+  },
+  "author": "John Brandt",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.5.2",
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.10",
+    "nodemon": "^1.18.3",
+    "pug": "^2.0.3",
+    "request": "^2.87.0",
+    "request-promise-native": "^1.0.5"
+  }
+}
