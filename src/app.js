@@ -2,9 +2,6 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const tba = require('./tba');
 const pug = require('pug');
-const NodeCache = require("node-cache");
-
-const cache = new NodeCache();
 
 const router = new Router();
 
@@ -23,36 +20,30 @@ const addView = (path, view, getModel) => {
 
 addView('/', 'index', async (ctx) => {
   const calendarEvents = [];
-  found = cache.get("eventCalendar");
-  if (found == undefined) {
-    const events = await tba.get('/events/2018/simple');
+  const events = await tba.get('/events/2018/simple');
 
-    for (var item = 0, length = events.length; item < length; item++) {
-      var event = {
-        "title": events[item].name,
-        "start": events[item].start_date,
-        "end": events[item].end_date,
-        "url": `/events/${events[item].key}`
-      }
-      calendarEvents.push(event);
+  for (var item = 0, length = events.length; item < length; item++) {
+    var event = {
+      "title": events[item].name,
+      "start": events[item].start_date,
+      "end": events[item].end_date,
+      "url": `/events/${events[item].key}`
     }
-    cache.set("calendarEvents", calendarEvents, 10000);
-  } else {
-    calendarEvents = found;
+    calendarEvents.push(event);
   }
 
   return { calendarEvents };
 
 });
 addView('/clearcache', 'clearcache', async (ctx) => {
-  cache.flushAll();
-  var cacheStats = cache.getStats();
+  var cacheStats = await tba.clearCache();
   return { cacheStats };
 });
 
 addView('/cachestats', 'cachestats', async (ctx) => {
-  var cacheStats = cache.getStats();
-  return { cacheStats };
+  var cacheStats = await tba.cacheStats();
+  var keys = await tba.cacheKeys();
+  return { cacheStats, keys };
 });
 
 

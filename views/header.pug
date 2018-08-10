@@ -16,17 +16,12 @@ html
         | a {
         |     color: #00b7ff;
         | }
-        | table.sortable thead {
-        |     cursor: pointer;
-        | }
-        | table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
-        |     content: " \25B4\25BE";
-        | }
     body
     nav.navbar.navbar-expand-md.fixed-top.navbar-light(style='background: #f0f0f0; font-size: 18px')
       // Brand
       a.navbar-brand(style='width: 13%', href='/')
-        img.img-fluid(src='{{ site.baseurl }}/resources/img/logo.png')
+        // todo get logo working
+        img.img-fluid(src='broken')
       // Toggler/collapsibe Button
       button.navbar-toggler(type='button', data-toggle='collapse', data-target='#collapsibleNavbar')
         span.navbar-toggler-icon
