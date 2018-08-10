@@ -1,0 +1,13 @@
+extends header
+block content
+    #stats(style="margin-top: 15px; display: none")= JSON.stringify(cacheStats)
+    #cleared(style="display: none; font-size: 24px; margin-top: 15px") Cache cleared!
+    #error(style="display: none; font-size: 24px; margin-top: 15px") An error occored!
+    script.
+        var $info = $('#stats');
+        var niceInfo = JSON.parse($info.text());
+        if (niceInfo.hits == 0 && niceInfo.misses == 0 && niceInfo.keys == 0 && niceInfo.ksize == 0 && niceInfo.vsize == 0) {
+            document.getElementById("cleared").style.display = "block";
+        } else {
+            document.getElementById("error").style.display = "block";
+        }

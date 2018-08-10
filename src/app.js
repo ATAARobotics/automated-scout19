@@ -44,6 +44,17 @@ addView('/', 'index', async (ctx) => {
   return { calendarEvents };
 
 });
+addView('/clearcache', 'clearcache', async (ctx) => {
+  cache.flushAll();
+  var cacheStats = cache.getStats();
+  return { cacheStats };
+});
+
+addView('/cachestats', 'cachestats', async (ctx) => {
+  var cacheStats = cache.getStats();
+  return { cacheStats };
+});
+
 
 new Koa()
   .use(router.routes())
