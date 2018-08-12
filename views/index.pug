@@ -7,9 +7,17 @@ block content
         var $records = $('#calendarEvents');
         var events = JSON.parse($records.text());
         $('#calendar').fullCalendar({
-            contentHeight: 800,
+            height: $( window ).height() - 115,
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,listWeek'
+            },
+            eventLimit: true,
             events: events
         })
+        $( window ).resize(function() {
+            $('#calendar').fullCalendar('option', 'height', $( window ).height() - 115);
         });
-
+        });
     #calendar(style="margin-top: 15px;")
