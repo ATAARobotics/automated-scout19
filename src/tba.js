@@ -25,13 +25,13 @@ module.exports = {
         cache.set(`${path}`, info);
         cache.set(`${path}-time`, response.headers['last-modified']);
         console.log('Getting data from TBA...');
-      }
-      if (!error && response.statusCode == 304) {
+      } else if (!error && response.statusCode == 304) {
         info = cache.get(`${path}`);
         console.log('Using cached, unchanged.');
-      }
-      if (error) {
+      } else if (error) {
         console.log(`Error ${response.statusCode}`);
+      } else {
+        console.log(`Invalid path ${path}`)
       }
     }
     
