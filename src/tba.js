@@ -1,5 +1,4 @@
-const request = require('request');
-const _ = require('lodash');
+const fetch = require("node-fetch");
 const NodeCache = require("node-cache");
 
 const cache = new NodeCache();
@@ -7,37 +6,31 @@ const cache = new NodeCache();
 const TBA = 'https://www.thebluealliance.com/api/v3';
 const API_KEY = 'T9N5KCUoNH0Qe36RwOJPtGUVic2y7SMTi98AvYFUjmitkEe5C6NK9Eq8coIWHlSV';
 
-var info = '';
-
 module.exports = {
   get: async (path) => {
     var options = {
-      uri: `${TBA}${path}`,
       headers: {
         'X-TBA-Auth-Key': API_KEY,
         'If-Modified-Since': cache.get(`${path}-time`)
       }
     };
-    
-    function callback(error, response, body) {
-      if (!error && response.statusCode == 200) {
-        info = JSON.parse(body);
+
+    try {
+      const response = await fetch(`${TBA}${path}`, options);
+      if (response.status == 200) {
+        var info = await response.json();
         cache.set(`${path}`, info);
-        cache.set(`${path}-time`, response.headers['last-modified']);
+        cache.set(`${path}-time`, response.headers.get('last-modified'));
         console.log('Getting data from TBA...');
-      } else if (!error && response.statusCode == 304) {
-        info = cache.get(`${path}`);
+        return info;
+      } else if (response.status == 304) {
         console.log('Using cached, unchanged.');
-      } else if (error) {
-        console.log(`Error ${response.statusCode}`);
-      } else {
-        console.log(`Invalid path ${path}`)
+        return cache.get(`${path}`);
       }
+    } catch (error) {
+      console.log(error);
     }
-    
-    request(options, callback);
-  
-    return info; 
+
   },
   clearCache: async () => {
     cache.flushAll();

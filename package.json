@@ -12,10 +12,9 @@
   "dependencies": {
     "koa": "^2.5.2",
     "koa-router": "^7.4.0",
-    "lodash": "^4.17.10",
     "node-cache": "^4.2.0",
+    "node-fetch": "^2.2.0",
     "nodemon": "^1.18.3",
-    "pug": "^2.0.3",
-    "request": "^2.87.0"
+    "pug": "^2.0.3"
   }
 }
