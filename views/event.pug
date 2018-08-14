@@ -1,0 +1,12 @@
+extends header
+
+block content
+    h1 #{event.name} #{event.year}
+        a(href="https://www.thebluealliance.com/event/" + event.key style="padding-left:15px")
+            img(src="https://www.thebluealliance.com/images/logo_square_512.png" height="25px" width="25px" style="border-radius: 25px;")
+    .row
+        each team in teams
+            .col-xs-4.col-sm-3.col-md-2
+                a(href="/team/" + team.team_number + "/event/" + event.key)
+                    p #{team.team_number} #{team.nickname}
+

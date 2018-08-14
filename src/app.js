@@ -27,7 +27,7 @@ addView('/', 'index', async (ctx) => {
       "title": events[item].name,
       "start": events[item].start_date,
       "end": events[item].end_date,
-      "url": `/events/${events[item].key}`
+      "url": `/event/${events[item].key}`
     }
     calendarEvents.push(event);
   }
@@ -46,6 +46,13 @@ addView('/cachestats', 'cachestats', async (ctx) => {
   return { cacheStats, keys };
 });
 
+addView('/event/:key', 'event', async (ctx) => {
+  return {
+    event: await tba.get(`/event/${ctx.params.key}/simple`),
+    teams: await tba.get(`/event/${ctx.params.key}/teams/simple`),
+    matches: await tba.get(`/event/${ctx.params.key}/matches/simple`)
+  };
+});
 
 new Koa()
   .use(router.routes())
