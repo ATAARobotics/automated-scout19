@@ -1,24 +1,22 @@
-const Koa = require('koa');
-const Router = require('koa-router');
+const express = require('express');
 const tba = require('./tba');
-const pug = require('pug');
 
-const router = new Router();
+var app = express();
 
 //Views
 
-const addView = (path, view, getModel) => {
-  router.get(path, async (ctx) => {
-    const model = await getModel(ctx);
-    if (ctx.query.json == 'true') {
-      ctx.body = model; return;
-    } else {
-      ctx.body = pug.renderFile(`./views/${view}.pug`, model);
-    }
+app.set('view engine', 'pug');
+
+const addView = (path, view, dataFunction) => {
+  app.get(path, async (req, res) => {
+    var data = await dataFunction(req);
+    res.render(view, data);
   });
 };
 
-addView('/', 'index', async (ctx) => {
+app.use(express.static('static'));
+
+addView ('/', 'index', async (req) => {
   const calendarEvents = [];
   const events = await tba.get('/events/2018/simple');
 
@@ -33,30 +31,27 @@ addView('/', 'index', async (ctx) => {
   }
 
   return { calendarEvents };
-
 });
-addView('/clearcache', 'clearcache', async (ctx) => {
+
+addView('/clearcache', 'clearcache', async (req) => {
   var cacheStats = await tba.clearCache();
   return { cacheStats };
 });
 
-addView('/cachestats', 'cachestats', async (ctx) => {
+addView('/cachestats', 'cachestats', async (req) => {
   var cacheStats = await tba.cacheStats();
   var keys = await tba.cacheKeys();
   return { cacheStats, keys };
 });
 
-addView('/event/:key', 'event', async (ctx) => {
+addView('/event/:key', 'event', async (req) => {
   return {
-    event: await tba.get(`/event/${ctx.params.key}/simple`),
-    teams: await tba.get(`/event/${ctx.params.key}/teams/simple`),
-    matches: await tba.get(`/event/${ctx.params.key}/matches/simple`)
+    event: await tba.get(`/event/${req.params.key}/simple`),
+    teams: await tba.get(`/event/${req.params.key}/teams/simple`),
+    matches: await tba.get(`/event/${req.params.key}/matches/simple`)
   };
 });
 
-new Koa()
-  .use(router.routes())
-  .use(router.allowedMethods())
-  .listen(process.env.PORT || 4334);
+app.listen(process.env.PORT || 4334);
 
 console.log(`Server on localhost:${process.env.PORT || 4334}`);

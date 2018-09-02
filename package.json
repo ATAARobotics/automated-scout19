@@ -10,8 +10,7 @@
   "author": "John Brandt",
   "license": "ISC",
   "dependencies": {
-    "koa": "^2.5.2",
-    "koa-router": "^7.4.0",
+    "express": "^4.16.3",
     "node-cache": "^4.2.0",
     "node-fetch": "^2.2.0",
     "nodemon": "^1.18.4",
