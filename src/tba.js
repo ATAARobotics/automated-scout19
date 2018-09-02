@@ -26,6 +26,10 @@ module.exports = {
       } else if (response.status == 304) {
         console.log('Using cached, unchanged.');
         return cache.get(`${path}`);
+      } else if (response.status == 404) {
+        throw ("Invalid path");
+      } else if (!response.ok) {
+        throw ("TBA fetch error!")
       }
     } catch (error) {
       console.log(error);
