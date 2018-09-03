@@ -1,6 +1,8 @@
 extends header
 
 block content
+    style
+        | .alli-blue{ background-color: #4487da; } .alli-red { background-color: #da3434; }
     h1 #{event.name} #{event.year}
         a(href="https://www.thebluealliance.com/event/" + event.key style="padding-left:15px")
             img(src="https://www.thebluealliance.com/images/logo_square_512.png" height="25px" width="25px" style="border-radius: 25px;")
@@ -9,4 +11,25 @@ block content
             .col-xs-4.col-sm-3.col-md-2
                 a(href="/team/" + team.team_number + "/event/" + event.key)
                     p #{team.team_number} #{team.nickname}
-
+    h3 Predicted Rankings
+    if predictions
+        .row
+            each team, index in predictions.ranking_predictions
+                .col-xs-4.col-sm-3.col-md-2
+                    a(href="/team/" + team.team_number + "/event/" + event.key)
+                        p #{index + 1}. #{team[0].substr(3)}
+    else
+        p Predictions are unavailable
+    .row
+        each match in matches
+            .col-xs-12.col-sm-6.col-md-4
+                .card(style="margin-bottom: 15px")
+                    a.card-header(href="https://www.thebluealliance.com/match/" + match.key) Match #{match.match_number}
+                    .card.alli-blue
+                        .card-header(style=match.winning_alliance=='blue' ? 'font-weight: bold' : "")
+                            div(style="float: left") #{match.alliances.blue.team_keys[0].substr(3)} | #{match.alliances.blue.team_keys[1].substr(3)} | #{match.alliances.blue.team_keys[2].substr(3)}
+                            div(style="float: right") #{match.alliances.blue.score==-1 ? 'Future match' : match.alliances.blue.score + " (" + Math.round(predictions.match_predictions.qual[match.key].blue.score) + ")"}
+                    .card.alli-red
+                        .card-header(style=match.winning_alliance=='red' ? 'font-weight: bold' : "")
+                            div(style="float: left") #{match.alliances.red.team_keys[0].substr(3)} | #{match.alliances.red.team_keys[1].substr(3)} | #{match.alliances.red.team_keys[2].substr(3)}
+                            div(style="float: right") #{match.alliances.red.score==-1 ? 'Future match' : match.alliances.red.score + " (" + Math.round(predictions.match_predictions.qual[match.key].red.score) + ")"}

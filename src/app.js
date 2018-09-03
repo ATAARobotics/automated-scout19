@@ -16,7 +16,7 @@ const addView = (path, view, dataFunction) => {
 
 app.use(express.static('static'));
 
-addView ('/', 'index', async (req) => {
+addView('/', 'index', async (req) => {
   const calendarEvents = [];
   const events = await tba.get('/events/2018/simple');
 
@@ -45,10 +45,21 @@ addView('/cachestats', 'cachestats', async (req) => {
 });
 
 addView('/event/:key', 'event', async (req) => {
+  var allMatches = await tba.get(`/event/${req.params.key}/matches/simple`);
+  var matches = [];
+  for (i = 0; i < allMatches.length; i++) {
+    if (allMatches[i].comp_level == "qm") {
+      matches.push(allMatches[i]);
+    }
+  }
+  matches.sort(function (a, b) {
+    return a.match_number - b.match_number
+  });
   return {
     event: await tba.get(`/event/${req.params.key}/simple`),
     teams: await tba.get(`/event/${req.params.key}/teams/simple`),
-    matches: await tba.get(`/event/${req.params.key}/matches/simple`)
+    matches: matches,
+    predictions: await tba.get(`/event/${req.params.key}/predictions`)
   };
 });
 
