@@ -63,6 +63,15 @@ addView('/event/:key', 'event', async (req) => {
   };
 });
 
+addView('/event/:eventKey/match/:matchKey', 'match', async (req) => {
+  return {
+    event: await tba.get(`/event/${req.params.eventKey}/simple`),
+    match: await tba.get(`/match/${req.params.matchKey}`),
+    predictions: await tba.get(`/event/${req.params.eventKey}/predictions`)
+  };
+});
+
+
 app.listen(process.env.PORT || 4334);
 
 console.log(`Server on localhost:${process.env.PORT || 4334}`);

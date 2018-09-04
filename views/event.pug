@@ -9,14 +9,14 @@ block content
     .row
         each team in teams
             .col-xs-4.col-sm-3.col-md-2
-                a(href="/team/" + team.team_number + "/event/" + event.key)
+                a(href="/team/" + team.key + "/event/" + event.key)
                     p #{team.team_number} #{team.nickname}
     h3 Predicted Rankings
     if predictions
         .row
             each team, index in predictions.ranking_predictions
                 .col-xs-4.col-sm-3.col-md-2
-                    a(href="/team/" + team.team_number + "/event/" + event.key)
+                    a(href="/team/" + team[0] + "/event/" + event.key)
                         p #{index + 1}. #{team[0].substr(3)}
     else
         p Predictions are unavailable
@@ -24,7 +24,7 @@ block content
         each match in matches
             .col-xs-12.col-sm-6.col-md-4
                 .card(style="margin-bottom: 15px")
-                    a.card-header(href="https://www.thebluealliance.com/match/" + match.key) Match #{match.match_number}
+                    a.card-header(href="/event/" + event.key + "/match/" + match.key) Match #{match.match_number}
                     .card.alli-blue
                         .card-header(style=match.winning_alliance=='blue' ? 'font-weight: bold' : "")
                             div(style="float: left") #{match.alliances.blue.team_keys[0].substr(3)} | #{match.alliances.blue.team_keys[1].substr(3)} | #{match.alliances.blue.team_keys[2].substr(3)}
