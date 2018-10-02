@@ -1,8 +1,6 @@
 extends header
 
 block content
-    style
-        | .alli-blue{ background-color: #4487da; } .alli-red { background-color: #da3434; }
     h1 #{event.name} #{event.year}
         a(href="https://www.thebluealliance.com/event/" + event.key style="padding-left:15px")
             img(src="https://www.thebluealliance.com/images/logo_square_512.png" height="25px" width="25px" style="border-radius: 25px;")
@@ -21,21 +19,7 @@ block content
     else
         p Predictions are unavailable
     .row
+        include mixin
         each match in matches
             .col-xs-12.col-sm-6.col-md-4
-                .card(style="margin-bottom: 15px")
-                    a.card-header(href="/event/" + event.key + "/match/" + match.key) Match #{match.match_number}
-                    .card.alli-blue
-                        .card-header(style=match.winning_alliance=='blue' ? 'font-weight: bold' : "")
-                            div(style="float: left") #{match.alliances.blue.team_keys[0].substr(3)} | #{match.alliances.blue.team_keys[1].substr(3)} | #{match.alliances.blue.team_keys[2].substr(3)}
-                            if predictions
-                                div(style="float: right") #{match.alliances.blue.score==-1 ? 'Future match' + " (" + Math.round(predictions.match_predictions.qual[match.key].blue.score) + ")" : match.alliances.blue.score + " (" + Math.round(predictions.match_predictions.qual[match.key].blue.score) + ")"}
-                            else
-                                div(style="float: right") #{match.alliances.blue.score==-1 ? 'Future match, predictions not available' : match.alliances.blue.score + " Predictions not available"}
-                    .card.alli-red
-                        .card-header(style=match.winning_alliance=='red' ? 'font-weight: bold' : "")
-                            div(style="float: left") #{match.alliances.red.team_keys[0].substr(3)} | #{match.alliances.red.team_keys[1].substr(3)} | #{match.alliances.red.team_keys[2].substr(3)}
-                            if predictions
-                                div(style="float: right") #{match.alliances.red.score==-1 ? 'Future match + " (" + Math.round(predictions.match_predictions.qual[match.key].red.score) + ")"' : match.alliances.red.score + " (" + Math.round(predictions.match_predictions.qual[match.key].red.score) + ")"}
-                            else
-                                div(style="float: right") #{match.alliances.red.score==-1 ? 'Future match, predictions not available' : match.alliances.red.score + " Predictions not available"}
+                +score(event, match)
