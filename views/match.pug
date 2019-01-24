@@ -1,4 +1,10 @@
 extends header
 
 block content
-    h1 #{event.name} Match #{match.match_number}
+    include mixin
+    if event && match
+        h1 #{event.name} Match #{match.match_number}
+        .col-xs-12.col-sm-6.col-md-4
+            +score(event, match)
+    else
+        h3 Could not fetch from TBA and there is no cached version

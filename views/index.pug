@@ -20,4 +20,7 @@ block content
             $('#calendar').fullCalendar('option', 'height', $( window ).height() - 115);
         });
         });
-    #calendar(style="margin-top: 15px;")
+    if calendarEvents[0]
+        #calendar(style="margin-top: 15px;")
+    else
+        h3 Could not fetch from TBA and there is no cached version

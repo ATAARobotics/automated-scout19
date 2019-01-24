@@ -19,17 +19,17 @@ app.use(express.static('static'));
 addView('/', 'index', async (req) => {
   const calendarEvents = [];
   const events = await tba.get('/events/2018/simple');
-
-  for (var item = 0, length = events.length; item < length; item++) {
-    var event = {
-      "title": events[item].name,
-      "start": events[item].start_date,
-      "end": events[item].end_date,
-      "url": `/event/${events[item].key}`
+  if (events) {
+    for (var item = 0, length = events.length; item < length; item++) {
+      var event = {
+        "title": events[item].name,
+        "start": events[item].start_date,
+        "end": events[item].end_date,
+        "url": `/event/${events[item].key}`
+      }
+      calendarEvents.push(event);
     }
-    calendarEvents.push(event);
   }
-
   return { calendarEvents };
 });
 
@@ -47,14 +47,16 @@ addView('/cachestats', 'cachestats', async (req) => {
 addView('/event/:key', 'event', async (req) => {
   var allMatches = await tba.get(`/event/${req.params.key}/matches/simple`);
   var matches = [];
-  for (i = 0; i < allMatches.length; i++) {
-    if (allMatches[i].comp_level == "qm") {
-      matches.push(allMatches[i]);
+  if (allMatches) {
+    for (i = 0; i < allMatches.length; i++) {
+      if (allMatches[i].comp_level == "qm") {
+        matches.push(allMatches[i]);
+      }
     }
+    matches.sort(function (a, b) {
+      return a.match_number - b.match_number
+    });
   }
-  matches.sort(function (a, b) {
-    return a.match_number - b.match_number
-  });
   return {
     event: await tba.get(`/event/${req.params.key}/simple`),
     teams: await tba.get(`/event/${req.params.key}/teams/simple`),
