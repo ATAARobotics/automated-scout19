@@ -1,10 +1,11 @@
 const fetch = require("node-fetch");
 const NodeCache = require("node-cache");
+const fs = require("fs");
 
 const cache = new NodeCache();
 
 const TBA = 'https://www.thebluealliance.com/api/v3';
-const API_KEY = 'T9N5KCUoNH0Qe36RwOJPtGUVic2y7SMTi98AvYFUjmitkEe5C6NK9Eq8coIWHlSV';
+const API_KEY = fs.readFileSync('API_KEY', "utf8");
 
 module.exports = {
   get: async (path) => {

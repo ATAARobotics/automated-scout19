@@ -1,5 +1,6 @@
 const express = require('express');
 const tba = require('./tba');
+const scouty = require('./scouty');
 
 var app = express();
 
@@ -73,6 +74,10 @@ addView('/event/:eventKey/match/:matchKey', 'match', async (req) => {
   };
 });
 
+app.get('/test', async (req, res) => {
+  let test = await scouty.exists('test');
+  res.send(test);
+});
 
 app.listen(process.env.PORT || 4334);
 

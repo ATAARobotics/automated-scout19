@@ -28,3 +28,8 @@ node_modules
 
 # Debug log from npm
 npm-debug.log
+
+API_KEY
+DB_ADDRESS
+DB_USERNAME
+DB_PASSWORD
