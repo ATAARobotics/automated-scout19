@@ -19,7 +19,7 @@ app.use(express.static('static'));
 
 addView('/', 'index', async (req) => {
   const calendarEvents = [];
-  const events = await tba.get('/events/2018/simple');
+  const events = await tba.get('/events/2019/simple');
   if (events) {
     for (var item = 0, length = events.length; item < length; item++) {
       var event = {
@@ -75,7 +75,7 @@ addView('/event/:eventKey/match/:matchKey', 'match', async (req) => {
 });
 
 app.get('/test', async (req, res) => {
-  let test = await scouty.getTeamPit("largetest", "2")
+  let test = await scouty.getTeamMatch('largetest', '4334', 'q', '1')
   res.send(test);
 });
 
