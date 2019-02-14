@@ -75,7 +75,7 @@ addView('/event/:eventKey/match/:matchKey', 'match', async (req) => {
 });
 
 app.get('/test', async (req, res) => {
-  let test = await scouty.exists('test');
+  let test = await scouty.getTeamPit("largetest", "2")
   res.send(test);
 });
 
