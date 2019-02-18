@@ -47,6 +47,7 @@ addView('/cachestats', 'cachestats', async (req) => {
 
 addView('/event/:key', 'event', async (req) => {
   var allMatches = await tba.get(`/event/${req.params.key}/matches/simple`);
+  var teams = await tba.get(`/event/${req.params.key}/teams/simple`);
   var matches = [];
   if (allMatches) {
     for (i = 0; i < allMatches.length; i++) {
@@ -58,9 +59,14 @@ addView('/event/:key', 'event', async (req) => {
       return a.match_number - b.match_number
     });
   }
+  if (teams) {
+    teams.sort(function (a, b) {
+      return a.team_number - b.team_number
+    });  
+  }
   return {
     event: await tba.get(`/event/${req.params.key}/simple`),
-    teams: await tba.get(`/event/${req.params.key}/teams/simple`),
+    teams: teams,
     matches: matches,
     predictions: await tba.get(`/event/${req.params.key}/predictions`)
   };
