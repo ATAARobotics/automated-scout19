@@ -1,0 +1,17 @@
+extends header
+
+block content
+    #matches(style="display:none")= JSON.stringify(matches)
+    #pit(style="display:none")= JSON.stringify(pit)
+    #team(style="display:none")= JSON.stringify(team)
+    link(rel='stylesheet', href='/css/vis.min.css')
+    script(src='/js/vis.min.js')
+    script(src='/js/teamevent.js')
+    h1 Team #{team.team_number} #{team.nickname}
+    h6 #{team.city}, #{team.state_prov}, #{team.country}
+    .row
+        .col-sm-7
+            img#photo1.img-fluid(style='margin-right: 15px')
+            img#photo2.img-fluid
+        .col-sm-5
+            

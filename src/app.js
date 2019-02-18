@@ -74,8 +74,19 @@ addView('/event/:eventKey/match/:matchKey', 'match', async (req) => {
   };
 });
 
+addView('/team/:teamNumber/event/:eventKey', 'teamevent', async (req) => {
+  let teamMatches = await scouty.getAllTeamMatches(req.params.eventKey.substr(4,7) + req.params.eventKey.substr(0,4), req.params.teamNumber.substr(3));
+  let teamPit = await scouty.getTeamPit(req.params.eventKey.substr(4,7) + req.params.eventKey.substr(0,4), req.params.teamNumber.substr(3));
+  let teamInfo = await tba.get(`/team/${req.params.teamNumber}/simple`)
+  return {
+    matches: teamMatches,
+    pit: teamPit,
+    team: teamInfo
+  }
+});
+
 app.get('/test', async (req, res) => {
-  let test = await scouty.getTeamMatch('largetest', '4334', 'q', '1')
+  let test = await scouty.getTeamAverage('bcvi2019', '4334');
   res.send(test);
 });
 
