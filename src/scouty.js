@@ -188,7 +188,7 @@ async function getTeamAverage (dbName, teamNumber, matchType) {
         var dead = 0;
         for (i = 0; i < matches.length; i++) {
             startingLevel.push(matches[i].startingLevel);
-            crossedBaseline += matches[i].crossesBaseline;
+            crossedBaseline += matches[i].crossedBaseline;
             sandstormCargoCargoship += matches[i].sandstormCargoCargoship;
             sandstormCargoRocket += matches[i].sandstormCargoRocket;
             sandstormHatchCargoship += matches[i].sandstormHatchCargoship;
@@ -264,10 +264,39 @@ async function getTeamAverage (dbName, teamNumber, matchType) {
         return err;
     }
 }
+async function getAlliancePrediction (dbName, red, blue) {
+    var redScore = 0;
+    var blueScore = 0;
+    for (var i = 0; i < red.length; i++) {
+        try {
+            var points = await getTeamAverage(dbName, red[i]);
+            redScore += points.pointsEarned;
+        } catch {
+            redScore = null;
+            break;
+        }
+    }
+    if (blue) {
+        for (var i = 0; i < blue.length; i++) {
+            try {
+                var points = await getTeamAverage(dbName, blue[i]);
+                blueScore += points.pointsEarned;
+            } catch {
+                blueScore = null;
+                break;
+            }
+        }
+    }
+    return {
+        red: redScore,
+        blue: blueScore
+    }
+}
 
 module.exports = {
     getTeamMatch,
     getAllTeamMatches,
     getTeamPit,
-    getTeamAverage
+    getTeamAverage,
+    getAlliancePrediction
 }

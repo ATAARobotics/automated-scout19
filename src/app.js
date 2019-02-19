@@ -49,6 +49,7 @@ addView('/event/:key', 'event', async (req) => {
   var allMatches = await tba.get(`/event/${req.params.key}/matches/simple`);
   var teams = await tba.get(`/event/${req.params.key}/teams/simple`);
   var matches = [];
+  var predictedScores = {};
   if (allMatches) {
     for (i = 0; i < allMatches.length; i++) {
       if (allMatches[i].comp_level == "qm") {
@@ -58,6 +59,17 @@ addView('/event/:key', 'event', async (req) => {
     matches.sort(function (a, b) {
       return a.match_number - b.match_number
     });
+    for (var i = 0; i < matches.length; i++) {
+      var red = [];
+      var blue = [];
+      for (var b = 0; b < 3; b++) {
+        blue.push(matches[i].alliances.blue.team_keys[b].substr(3));
+      }
+      for (var r = 0; r < 3; r++) {
+        red.push(matches[i].alliances.red.team_keys[r].substr(3));
+      }
+      predictedScores[matches[i].key] = await scouty.getAlliancePrediction(req.params.key.substr(4,7) + req.params.key.substr(0,4), red, blue);
+    }
   }
   if (teams) {
     teams.sort(function (a, b) {
@@ -68,7 +80,8 @@ addView('/event/:key', 'event', async (req) => {
     event: await tba.get(`/event/${req.params.key}/simple`),
     teams: teams,
     matches: matches,
-    predictions: await tba.get(`/event/${req.params.key}/predictions`)
+    predictions: await tba.get(`/event/${req.params.key}/predictions`),
+    predictedScores: predictedScores
   };
 });
 

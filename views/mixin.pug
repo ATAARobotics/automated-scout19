@@ -6,14 +6,8 @@ mixin score(event, match)
         .card.alli-blue(style="margin: 10px 10px 10px 10px")
             .card-header(style=match.winning_alliance=='blue' ? 'font-weight: bold' : "")
                 div(style="float: left") #{match.alliances.blue.team_keys[0].substr(3)} | #{match.alliances.blue.team_keys[1].substr(3)} | #{match.alliances.blue.team_keys[2].substr(3)}
-                if predictions
-                    div(style="float: right") #{match.alliances.blue.score==-1 ? 'Future match' + " (" + Math.round(predictions.match_predictions.qual[match.key].blue.score) + ")" : match.alliances.blue.score + " (" + Math.round(predictions.match_predictions.qual[match.key].blue.score) + ")"}
-                else
-                    div(style="float: right") #{match.alliances.blue.score==-1 ? 'Future match, predictions not available' : match.alliances.blue.score + " Predictions not available"}
+                div(style="float: right") #{match.alliances.blue.score==-1 ? 'Future match' : match.alliances.blue.score} #{predictions ? `(${Math.round(predictions.match_predictions.qual[match.key].blue.score)})` : "(NA)"} #{predictedScores[match.key].blue ? `[${predictedScores[match.key].blue}]` : "[NA]"}
         .card.alli-red(style="margin: 0px 10px 10px 10px")
             .card-header(style=match.winning_alliance=='red' ? 'font-weight: bold' : "")
                 div(style="float: left") #{match.alliances.red.team_keys[0].substr(3)} | #{match.alliances.red.team_keys[1].substr(3)} | #{match.alliances.red.team_keys[2].substr(3)}
-                if predictions
-                    div(style="float: right") #{match.alliances.red.score==-1 ? 'Future match + " (" + Math.round(predictions.match_predictions.qual[match.key].red.score) + ")"' : match.alliances.red.score + " (" + Math.round(predictions.match_predictions.qual[match.key].red.score) + ")"}
-                else
-                    div(style="float: right") #{match.alliances.red.score==-1 ? 'Future match, predictions not available' : match.alliances.red.score + " Predictions not available"}
+                div(style="float: right") #{match.alliances.red.score==-1 ? 'Future match' : match.alliances.red.score} #{predictions ? `(${Math.round(predictions.match_predictions.qual[match.key].red.score)})` : "(NA)"} #{predictedScores[match.key].red ? `[${predictedScores[match.key].red}]` : "[NA]"}
