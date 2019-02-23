@@ -5,8 +5,19 @@ block content
     #pit(style="display:none")= JSON.stringify(pit)
     #team(style="display:none")= JSON.stringify(team)
     link(rel='stylesheet', href='/css/vis.min.css')
+    link(rel='stylesheet', href='/DataTables/datatables.min.css')
     script(src='/js/vis.min.js')
+    script(src='/DataTables/datatables.min.js')
+    script(src='/js/natural.js')
     script(src='/js/teamevent.js')
+    style.
+        div.dt-button-collection.fixed.four-column {
+            margin-left: -500px;
+            width: 1000px;
+        }
+        div.dataTables_scrollBody table tbody tr {
+            height: auto !important;
+        }
     h1 Team #{team.team_number} #{team.nickname}
     h6 #{team.city}, #{team.state_prov}, #{team.country}
     .row
@@ -15,4 +26,15 @@ block content
         .col-sm-4
             img#photo2.img-fluid
         .col-sm-4
-            
+    .row
+        .col-12
+            h1 Pit
+    .row
+        .col-12
+            table#pit-table.display(width='100%', style="table-layout: fixed;")
+    .row
+        .col-12
+            h1 Match
+    .row
+        .col-12
+            table#match-table.display(width="100%", style="table-layout: fixed;")

@@ -105,7 +105,7 @@ addView('/team/:teamNumber/event/:eventKey', 'teamevent', async (req) => {
 });
 
 app.get('/test', async (req, res) => {
-  let test = await scouty.getTeamAverage('bcvi2019', '4334');
+  let test = await scouty.getAllTeamMatches('week02019', '501');
   res.send(test);
 });
 
