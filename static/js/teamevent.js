@@ -325,4 +325,57 @@ window.onload = function () {
             }
         })
     })
+    var timeline;
+    $('#timeline-select').on('change', function (e) {
+        var match = matches.find(x => x._id == $('#timeline-select').val());
+        var timelineArray = [];
+        timelineArray.push({content: 'Sandstorm', type: 'background', start: moment('02:15.0', "mm:ss.S"), end: moment('02:30.0', "mm:ss.S")});
+        if (match.crossedBaselineTime) {
+            timelineArray.push({content: 'Crossed Baseline', title: match.crossedBaselineTime, start: moment(match.crossedBaselineTime, "mm:ss.S")});
+        }
+        if (match.sandstormCargoCargoshipTime) {
+            timelineArray.push({content: "Cargo In Cargoship", title: match.sandstormCargoCargoshipTime, start: moment(match.sandstormCargoCargoshipTime, "mm:ss.S")})
+        }
+        if (match.sandstormCargoRocketTime) {
+            timelineArray.push({content: "Cargo In Rocket", title: match.sandstormCargoRocketTime, start: moment(match.sandstormCargoRocketTime, "mm:ss.S")})
+        }
+        if (match.sandstormHatchCargoshipTime) {
+            timelineArray.push({content: "Hatch In Cargoship", title: match.sandstormHatchCargoshipTime, start: moment(match.sandstormHatchCargoshipTime, "mm:ss.S")})
+        }
+        if (match.sandstormHatchRocketTime) {
+            timelineArray.push({content: "Hatch In Rocket", title: match.sandstormHatchRocketTime, start: moment(match.sandstormHatchRocketTime, "mm:ss.S")})
+        }
+        for (var i = 0; i < match.teleopCargoTime.length; i++) {
+            timelineArray.push({content: `Cargo In ${match.teleopCargoTime[i][2]}`, title: `${match.teleopCargoTime[i][0]} - ${match.teleopCargoTime[i][1]}`, start: moment(match.teleopCargoTime[i][1], "mm:ss.S"), end: moment(match.teleopCargoTime[i][0])})
+        }
+        for (var i = 0; i < match.teleopHatchTime.length; i++) {
+            timelineArray.push({content: `Hatch In ${match.teleopHatchTime[i][2]}`, title: `${match.teleopHatchTime[i][0]} - ${match.teleopHatchTime[i][1]}`, start: moment(match.teleopHatchTime[i][1], "mm:ss.S"), end: moment(match.teleopHatchTime[i][0])})
+        }
+        if (match.climbingTime[0] && match.climbingTime[1]) {
+            timelineArray.push({content: 'Climbing', title: `${match.climbingTime[0]}-${match.climbingTime[1]}`, start: moment(match.climbingTime[1], "mm:ss.S"), end: moment(match.climbingTime[0])})  
+        }
+        if (timeline) {
+            timeline.destroy();
+        }
+        var items = new vis.DataSet(timelineArray);
+        var container = document.getElementById('timeline');
+        timeline = new vis.Timeline(container, items, {
+            min: moment('00:00.0', "mm:ss.S"),
+            max: moment('02:30.0', "mm:ss.S"),
+            start: moment('00:55.0', "mm:ss.S"),
+            end: moment('02:30.0', "mm:ss.S"),
+            zoomMax: 95000,
+            showMajorLabels: false,
+            zoomMin: 9000,
+            timeAxis: {
+                scale: 'second',
+                step: 5
+            },
+            format: {
+                minorLabels: {
+                    second: 'mm:ss.S'
+                }
+            }
+        });    
+    })
 }
