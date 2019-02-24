@@ -9,6 +9,7 @@ block content
     script(src='/js/vis.min.js')
     script(src='/DataTables/datatables.min.js')
     script(src='/js/natural.js')
+    script(src='/js/Chart.min.js')
     script(src='/js/teamevent.js')
     style.
         div.dt-button-collection.fixed.four-column {
@@ -38,3 +39,30 @@ block content
     .row
         .col-12
             table#match-table.display(width="100%", style="table-layout: fixed;")
+    .row
+        .col-12
+            h1 Chart
+    .row
+        .col-12
+            select#yaxis.custom-select.mr-sm-2
+                option(value='' selected) Choose...
+                option(value='13') Cargoship Cargo
+                option(value='14') Rocket 1 Cargo
+                option(value='15') Rocket 2 Cargo
+                option(value='16') Rocket 3 Cargo
+                option(value='17') Dropped Cargo
+                option(value='18') Cargoship Hatch
+                option(value='19') Rocket 1 Hatch
+                option(value='20') Rocket 2 Hatch
+                option(value='21') Rocket 3 Hatch
+                option(value='22') Dropped Hatch
+                option(value='26') Speed
+                option(value='27') Stability
+                option(value='28') Driver Skill
+                option(value='29') Defence
+                option(value='32') Total Cargo
+                option(value='33') Total Hatch
+                option(value='39') Cargo Success
+                option(value='40') Hatch Success
+                option(value='41') Total Points
+            canvas#match-chart(width="100%", height="50")

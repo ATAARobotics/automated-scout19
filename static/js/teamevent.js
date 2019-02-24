@@ -89,7 +89,7 @@ window.onload = function () {
             }
         ]
     });
-$('#match-table').on('error.dt', function (e, settings, techNote, message) {
+    $('#match-table').on('error.dt', function (e, settings, techNote, message) {
         console.log('match-table: ', message);
     }).removeAttr('width').DataTable({
         data: matches,
@@ -112,6 +112,10 @@ $('#match-table').on('error.dt', function (e, settings, techNote, message) {
                 data: "_id",
                 title: "Match",
                 type: "natural"
+            },
+            {
+                data: "scoutName",
+                title: "Scout Name"
             },
             {
                 data: "startingLevel",
@@ -280,10 +284,45 @@ $('#match-table').on('error.dt', function (e, settings, techNote, message) {
             }
         ]
     });
-    $('#match-table').on( 'column-visibility.dt', function ( e, settings, column, state ) {
+    $('#match-table').on('column-visibility.dt', function (e, settings, column, state) {
         for (var i = 0; i < matches.length; i++) {
             $('#match-table').DataTable().draw()
-            $( `td.sorting_1:contains(${matches[i]._id})` ).eq(1).parent().css( "height", $( `td.sorting_1:contains(${matches[i]._id})` ).eq(0).height() + 16);
+            $(`td.sorting_1:contains(${matches[i]._id})`).eq(1).parent().css("height", $(`td.sorting_1:contains(${matches[i]._id})`).eq(0).height() + 16);
         }
-    } );
+    });
+    $('#yaxis').on('change', function (e) {
+        var ctx = document.getElementById("match-chart");
+        if (window.matchChart) {
+            matchChart.destroy();
+        }
+        window.matchChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: $('#match-table').DataTable().column(0).data(),
+                datasets: [{
+                    label: $('#match-table').DataTable().settings().init().columns[$('#yaxis').val()].title,
+                    data: $('#match-table').DataTable().column($('#yaxis').val()).data()
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: $('#match-table').DataTable().settings().init().columns[$('#yaxis').val()].title,
+                        }
+                    }],
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Match'
+                        }
+                    }]
+                }
+            }
+        })
+    })
 }
