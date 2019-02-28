@@ -3,8 +3,6 @@ window.onload = function () {
     var matches = JSON.parse($matches.text());
     var $pit = $('#pit');
     var pit = JSON.parse($pit.text());
-    var $team = $('#team');
-    var team = JSON.parse($team.text());
     $.fn.dataTable.ext.errMode = 'none';
     function b64toBlob(b64Data, contentType, sliceSize) {
         contentType = contentType || '';
@@ -346,13 +344,13 @@ window.onload = function () {
             timelineArray.push({content: "Hatch In Rocket", title: match.sandstormHatchRocketTime, start: moment(match.sandstormHatchRocketTime, "mm:ss.S")})
         }
         for (var i = 0; i < match.teleopCargoTime.length; i++) {
-            timelineArray.push({content: `Cargo In ${match.teleopCargoTime[i][2]}`, title: `${match.teleopCargoTime[i][0]} - ${match.teleopCargoTime[i][1]}`, start: moment(match.teleopCargoTime[i][1], "mm:ss.S"), end: moment(match.teleopCargoTime[i][0])})
+            timelineArray.push({content: `Cargo In ${match.teleopCargoTime[i][2]}`, title: `${match.teleopCargoTime[i][0]} - ${match.teleopCargoTime[i][1]}`, start: moment(match.teleopCargoTime[i][1], "mm:ss.S"), end: moment(match.teleopCargoTime[i][0], "mm:ss.S")})
         }
         for (var i = 0; i < match.teleopHatchTime.length; i++) {
-            timelineArray.push({content: `Hatch In ${match.teleopHatchTime[i][2]}`, title: `${match.teleopHatchTime[i][0]} - ${match.teleopHatchTime[i][1]}`, start: moment(match.teleopHatchTime[i][1], "mm:ss.S"), end: moment(match.teleopHatchTime[i][0])})
+            timelineArray.push({content: `Hatch In ${match.teleopHatchTime[i][2]}`, title: `${match.teleopHatchTime[i][0]} - ${match.teleopHatchTime[i][1]}`, start: moment(match.teleopHatchTime[i][1], "mm:ss.S"), end: moment(match.teleopHatchTime[i][0], "mm:ss.S")})
         }
         if (match.climbingTime[0] && match.climbingTime[1]) {
-            timelineArray.push({content: 'Climbing', title: `${match.climbingTime[0]}-${match.climbingTime[1]}`, start: moment(match.climbingTime[1], "mm:ss.S"), end: moment(match.climbingTime[0])})  
+            timelineArray.push({content: 'Climbing', title: `${match.climbingTime[0]}-${match.climbingTime[1]}`, start: moment(match.climbingTime[1], "mm:ss.S"), end: moment(match.climbingTime[0], "mm:ss.S")})  
         }
         if (timeline) {
             timeline.destroy();
