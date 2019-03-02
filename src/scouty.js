@@ -129,23 +129,11 @@ async function getTeamPit (dbName, teamNumber) {
     }
 }
 
-function mode(array) {
-    let mf = 1;
-    let m = 0;
-    let item;
-    for (let i = 0; i < array.length; i++) {
-        for (let j = i; j < array.length; j++) {
-            if (array[i] == array[j])
-                m++;
-            if (mf < m) {
-                mf = m;
-                item = array[i];
-            }
-        }
-        m = 0;
-    }
-    var result = `${item}`;
-    return result;
+function mode(arr){
+    return arr.sort((a,b) =>
+          arr.filter(v => v===a).length
+        - arr.filter(v => v===b).length
+    ).pop();
 }
 
 async function getTeamAverage (dbName, teamNumber, matchType) {
@@ -224,6 +212,7 @@ async function getTeamAverage (dbName, teamNumber, matchType) {
             dead += matches[i].dead;
         }
         return {
+            teamNumber: teamNumber,
             startingLevel: mode(startingLevel),
             crossedBaseline: +((crossedBaseline / matches.length) * 100).toFixed(1),
             sandstormCargoCargoship: +((sandstormCargoCargoship / matches.length) * 100).toFixed(1),

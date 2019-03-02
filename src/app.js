@@ -104,8 +104,19 @@ addView('/team/:teamNumber/event/:eventKey', 'teamevent', async (req) => {
   }
 });
 
+addView('/event/:eventKey/compare', 'teamCompare', async (req) => {
+  let teams = await tba.get(`/event/${req.params.eventKey}/teams/simple`);
+  var teamAverages = [];
+  for (var i = 0; i < teams.length; i++) {
+    teamAverages.push(await scouty.getTeamAverage(req.params.eventKey.substr(4,7) + req.params.eventKey.substr(0,4), teams[i].team_number));
+  }
+  return {
+    teamAverages: teamAverages
+  }
+})
+
 app.get('/test', async (req, res) => {
-  let test = await scouty.getAllTeamMatches('week02019', '501');
+  let test = await scouty.getTeamAverage('week02019', '501');
   res.send(test);
 });
 

@@ -1,0 +1,19 @@
+extends header
+
+block content
+    link(rel='stylesheet', href='/DataTables/datatables.min.css')
+    script(src='/DataTables/datatables.min.js')
+    script(src='/js/Chart.min.js')
+    script(src='/js/teamCompare.js')
+    style.
+        div.dt-button-collection.fixed.four-column {
+            margin-left: -500px;
+            width: 1000px;
+        }
+        div.dataTables_scrollBody table tbody tr {
+            height: auto !important;
+        }
+    #averages(style="display:none")= JSON.stringify(teamAverages)
+    h1 Team Compare
+    h3 Average Table
+    table#average-table.display.cell-border(width="100%", style="table-layout: fixed;")
