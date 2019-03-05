@@ -36,9 +36,10 @@ window.onload = function () {
     }).DataTable({
         data: pit,
         paging: false,
+        scrollY: "400px",
+        scrollCollapse: true,
         colReorder: true,
         scrollX: true,
-        fixedHeader: true,
         columns: [
             {
                 data: "_rev",
@@ -46,39 +47,48 @@ window.onload = function () {
             },
             {
                 data: "scoutName",
-                title: "Scout Name"
+                title: "Scout Name",
+                defaultContent: "No Name"
             },
             {
                 data: "vision",
-                title: "Vision"
+                title: "Vision",
+                defaultContent: 0
             },
             {
                 data: "robotAppearance",
-                title: "Appearance"
+                title: "Appearance",
+                defaultContent: 0
             },
             {
                 data: "groundIntake",
-                title: "Ground Intake"
+                title: "Ground Intake",
+                defaultContent: 0
             },
             {
                 data: "climbLevel",
-                title: "Climb Level"
+                title: "Climb Level",
+                defaultContent: 0
             },
             {
                 data: "cargoLevel",
-                title: "Cargo Level"
+                title: "Cargo Level",
+                defaultContent: 0
             },
             {
                 data: "hatchLevel",
-                title: "Hatch Level"
+                title: "Hatch Level",
+                defaultContent: 0
             },
             {
                 data: "robotDone",
-                title: "Done"
+                title: "Done",
+                defaultContent: 0
             },
             {
                 data: "robotBroken",
-                title: "Broken"
+                title: "Broken",
+                defaultContent: 0
             },
             {
                 data: "comments",
@@ -97,7 +107,6 @@ window.onload = function () {
         scrollY: "400px",
         scrollCollapse: true,
         fixedColumns: true,
-        fixedHeader: true,
         dom: 'Bfrtip',
         buttons: [
             {
@@ -113,167 +122,208 @@ window.onload = function () {
             },
             {
                 data: "scoutName",
-                title: "Scout Name"
+                title: "Scout Name",
+                defaultContent: "No Name"
             },
             {
                 data: "startingLevel",
-                title: "Starting Level"
+                title: "Starting Level",
+                defaultContent: 0
             },
             {
                 data: "crossedBaseline",
-                title: "Baseline"
+                title: "Baseline",
+                defaultContent: 0
             },
             {
                 data: "crossedBaselineTime",
-                title: "Baseline Time"
+                title: "Baseline Time",
+                defaultContent: 0
             },
             {
                 data: "sandstormCargoCargoship",
-                title: "Sandstorm Cargo Cargoship"
+                title: "Sandstorm Cargo Cargoship",
+                defaultContent: 0
             },
             {
                 data: "sandstormCargoCargoshipTime",
-                title: "Sandstorm Cargo Cargoship Time"
+                title: "Sandstorm Cargo Cargoship Time",
+                defaultContent: 0
             },
             {
                 data: "sandstormCargoRocket",
-                title: "Sandstorm Cargo Rocket"
+                title: "Sandstorm Cargo Rocket",
+                defaultContent: 0
             },
             {
                 data: "sandstormCargoRocketTime",
-                title: "Sandstorm Cargo Rocket Time"
+                title: "Sandstorm Cargo Rocket Time",
+                defaultContent: 0
             },
             {
                 data: "sandstormHatchCargoship",
-                title: "Sandstorm Hatch Cargoship"
+                title: "Sandstorm Hatch Cargoship",
+                defaultContent: 0
             },
             {
                 data: "sandstormHatchCargoshipTime",
-                title: "Sandstorm Hatch Cargoship Time"
+                title: "Sandstorm Hatch Cargoship Time",
+                defaultContent: 0
             },
             {
                 data: "sandstormHatchRocket",
-                title: "Sandstorm Hatch Rocket"
+                title: "Sandstorm Hatch Rocket",
+                defaultContent: 0
             },
             {
                 data: "sandstormHatchRocketTime",
-                title: "Sandstorm Hatch Rocket Time"
+                title: "Sandstorm Hatch Rocket Time",
+                defaultContent: 0
             },
             {
                 data: "teleopCargoshipCargo",
-                title: "Cargoship Cargo"
+                title: "Cargoship Cargo",
+                defaultContent: 0
             },
             {
                 data: "teleopRocket1Cargo",
-                title: "Rocket 1 Cargo"
+                title: "Rocket 1 Cargo",
+                defaultContent: 0
             },
             {
                 data: "teleopRocket2Cargo",
-                title: "Rocket 2 Cargo"
+                title: "Rocket 2 Cargo",
+                defaultContent: 0
             },
             {
                 data: "teleopRocket3Cargo",
-                title: "Rocket 3 Cargo"
+                title: "Rocket 3 Cargo",
+                defaultContent: 0
             },
             {
                 data: "teleopDroppedCargo",
-                title: "Dropped Cargo"
+                title: "Dropped Cargo",
+                defaultContent: 0
             },
             {
                 data: "teleopCargoshipHatch",
-                title: "Cargoship Hatch"
+                title: "Cargoship Hatch",
+                defaultContent: 0
             },
             {
                 data: "teleopRocket1Hatch",
-                title: "Rocket 1 Hatch"
+                title: "Rocket 1 Hatch",
+                defaultContent: 0
             },
             {
                 data: "teleopRocket2Hatch",
-                title: "Rocket 2 Hatch"
+                title: "Rocket 2 Hatch",
+                defaultContent: 0
             },
             {
                 data: "teleopRocket3Hatch",
-                title: "Rocket 3 Hatch"
+                title: "Rocket 3 Hatch",
+                defaultContent: 0
             },
             {
                 data: "teleopDroppedHatch",
-                title: "Dropped Hatch"
+                title: "Dropped Hatch",
+                defaultContent: 0
             },
             {
                 data: "climbingType",
-                title: "Climb Level"
+                title: "Climb Level",
+                defaultContent: 0
             },
             {
                 data: "climbingGaveAssistance",
-                title: "Gave Climbing Assistance"
+                title: "Gave Climbing Assistance",
+                defaultContent: 0
             },
             {
                 data: "climbingGotAssistance",
-                title: "Got Climbing Assistance"
+                title: "Got Climbing Assistance",
+                defaultContent: 0
             },
             {
                 data: "speed",
-                title: "Speed"
+                title: "Speed",
+                defaultContent: 0
             },
             {
                 data: "stability",
-                title: "Stability"
+                title: "Stability",
+                defaultContent: 0
             },
             {
                 data: "driverSkill",
-                title: "Driver Skill"
+                title: "Driver Skill",
+                defaultContent: 0
             },
             {
                 data: "defence",
-                title: "Defence"
+                title: "Defence",
+                defaultContent: 0
             },
             {
                 data: "anythingBreak",
-                title: "Broken"
+                title: "Broken",
+                defaultContent: 0
             },
             {
                 data: "dead",
-                title: "Dead"
+                title: "Dead",
+                defaultContent: 0
             },
             {
                 data: "totalCargo",
-                title: "Total Cargo"
+                title: "Total Cargo",
+                defaultContent: 0
             },
             {
                 data: "totalHatch",
-                title: "Total Hatch"
+                title: "Total Hatch",
+                defaultContent: 0
             },
             {
                 data: "averageCargoPickupTime",
-                title: "Cargo Pickup Time"
+                title: "Cargo Pickup Time",
+                defaultContent: 0
             },
             {
                 data: "averageCargoDropoffTime",
-                title: "Cargo Dropoff Time"
+                title: "Cargo Dropoff Time",
+                defaultContent: 0
             },
             {
                 data: "averageHatchPickupTime",
-                title: "Hatch Pickup Time"
+                title: "Hatch Pickup Time",
+                defaultContent: 0
             },
             {
                 data: "averageHatchDropoffTime",
-                title: "Hatch Dropoff Time"
+                title: "Hatch Dropoff Time",
+                defaultContent: 0
             },
             {
                 data: "climbingDuration",
-                title: "Climb Time"
+                title: "Climb Time",
+                defaultContent: 0
             },
             {
                 data: "cargoSuccessPercent",
-                title: "Cargo Success"
+                title: "Cargo Success",
+                defaultContent: 0
             },
             {
                 data: "hatchSuccessPercent",
-                title: "Hatch Success"
+                title: "Hatch Success",
+                defaultContent: 0
             },
             {
                 data: "pointsEarned",
-                title: "Points Earned"
+                title: "Points Earned",
+                defaultContent: 0
             },
             {
                 width: "500px",
@@ -296,10 +346,10 @@ window.onload = function () {
         window.matchChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: $('#match-table').DataTable().column(0).data(),
+                labels: $('#match-table').DataTable().column(0).data().toArray(),
                 datasets: [{
                     label: $('#match-table').DataTable().settings().init().columns[$('#yaxis').val()].title,
-                    data: $('#match-table').DataTable().column($('#yaxis').val()).data()
+                    data: $('#match-table').DataTable().column($('#yaxis').val()).data().toArray()
                 }]
             },
             options: {

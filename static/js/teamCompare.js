@@ -13,7 +13,6 @@ window.onload = function() {
         scrollY: "400px",
         scrollCollapse: true,
         fixedColumns: true,
-        fixedHeader: true,
         dom: 'Bfrtip',
         buttons: [
             {
@@ -28,144 +27,214 @@ window.onload = function() {
             },
             {
                 data: 'startingLevel',
-                title: 'Starting Level'
+                title: 'Starting Level',
+                defaultContent: 0
             },
             {
                 data: 'crossedBaseline',
-                title: 'Crossed Baseline'
+                title: 'Crossed Baseline',
+                defaultContent: 0
             },
             {
                 data: 'sandstormCargoCargoship',
-                title: 'Sandstorm Cargo Cargoship'
+                title: 'Sandstorm Cargo Cargoship',
+                defaultContent: 0
             },
             {
                 data: 'sandstormCargoRocket',
-                title: 'Sandstorm Cargo Rocket'
+                title: 'Sandstorm Cargo Rocket',
+                defaultContent: 0
             },
             {
                 data: 'sandstormHatchCargoship',
-                title: 'Sandstorm Hatch Cargoship'
+                title: 'Sandstorm Hatch Cargoship',
+                defaultContent: 0
             },
             {
                 data: 'sandstormHatchRocket',
-                title: 'Sandstorm Hatch Rocket'
+                title: 'Sandstorm Hatch Rocket',
+                defaultContent: 0
             },
             {
                 data: 'teleopCargoshipCargo',
-                title: 'Cargoship Cargo'
+                title: 'Cargoship Cargo',
+                defaultContent: 10
             },
             {
                 data: 'teleopRocket1Cargo',
-                title: 'Rocket 1 Cargo'
+                title: 'Rocket 1 Cargo',
+                defaultContent: 0
             },
             {
                 data: 'teleopRocket2Cargo',
-                title: 'Rocket 2 Cargo'
+                title: 'Rocket 2 Cargo',
+                defaultContent: 0
             },
             {
                 data: 'teleopRocket3Cargo',
-                title: 'Rocket 3 Cargo'
+                title: 'Rocket 3 Cargo',
+                defaultContent: 0
             },
             {
                 data: 'teleopDroppedCargo',
-                title: 'Dropped Cargo'
+                title: 'Dropped Cargo',
+                defaultContent: 0
             },
             {
                 data: 'cargoPickupTime',
-                title: 'Cargo Pickup Time'
+                title: 'Cargo Pickup Time',
+                defaultContent: 0
             },
             {
                 data: 'cargoDropoffTime',
-                title: 'Cargo Dropoff Time'
+                title: 'Cargo Dropoff Time',
+                defaultContent: 0
             },
             {
                 data: 'cargoSuccessPercent',
-                title: 'Cargo Success Percent'
+                title: 'Cargo Success Percent',
+                defaultContent: 0
             },
             {
                 data: 'totalCargo',
-                title: 'Total Cargo'
+                title: 'Total Cargo',
+                defaultContent: 0
             },
             {
                 data: 'teleopCargoshipHatch',
-                title: 'Cargoship Hatch'
+                title: 'Cargoship Hatch',
+                defaultContent: 0
             },
             {
                 data: 'teleopRocket1Hatch',
-                title: 'Rocket 1 Hatch'
+                title: 'Rocket 1 Hatch',
+                defaultContent: 0
             },
             {
                 data: 'teleopRocket2Hatch',
-                title: 'Rocket 2 Hatch'
+                title: 'Rocket 2 Hatch',
+                defaultContent: 0
             },
             {
                 data: 'teleopRocket3Hatch',
-                title: 'Rocket 3 Hatch'
+                title: 'Rocket 3 Hatch',
+                defaultContent: 0
             },
             {
                 data: 'teleopDroppedHatch',
-                title: 'Dropped Hatch'
+                title: 'Dropped Hatch',
+                defaultContent: 0
             },
             {
                 data: 'hatchPickupTime',
-                title: 'Hatch Pickup Time'
+                title: 'Hatch Pickup Time',
+                defaultContent: 0
             },
             {
                 data: 'hatchDropoffTime',
-                title: 'Hatch Dropoff Time'
+                title: 'Hatch Dropoff Time',
+                defaultContent: 0
             },
             {
                 data: 'hatchSuccessPercent',
-                title: 'Hatch Success Percent'
+                title: 'Hatch Success Percent',
+                defaultContent: 0
             },
             {
                 data: 'totalHatch',
-                title: 'Total Hatch'
+                title: 'Total Hatch',
+                defaultContent: 0
             },
             {
                 data: 'climbingDuration',
-                title: 'Climbing Duration'
+                title: 'Climbing Duration',
+                defaultContent: 0
             },
             {
                 data: 'pointsEarned',
-                title: 'Points Earned'
+                title: 'Points Earned',
+                defaultContent: 0
             },
             {
                 data: 'climbingType',
-                title: 'Climbing Type'
+                title: 'Climbing Type',
+                defaultContent: 0
             },
             {
                 data: 'climbingGaveAssistance',
-                title: 'Climbing Gave Assistance'
+                title: 'Climbing Gave Assistance',
+                defaultContent: 0
             },
             {
                 data: 'climbingGotAssistance',
-                title: 'Climbing Got Assistance'
+                title: 'Climbing Got Assistance',
+                defaultContent: 0
             },
             {
                 data: 'speed',
-                title: 'Speed'
+                title: 'Speed',
+                defaultContent: 0
             },
             {
                 data: 'stability',
-                title: 'Stability'
+                title: 'Stability',
+                defaultContent: 0
             },
             {
                 data: 'driverSkill',
-                title: 'Driver Skill'
+                title: 'Driver Skill',
+                defaultContent: 0
             },
             {
                 data: 'defence',
-                title: 'Defence'
+                title: 'Defence',
+                defaultContent: 0
             },
             {
                 data: 'anythingBreak',
-                title: 'Anything Break'
+                title: 'Anything Break',
+                defaultContent: 0
             },
             {
                 data: 'dead',
-                title: 'Dead'
+                title: 'Dead',
+                defaultContent: 0
             }
         ]
+    })
+    $('#yaxis').on('change', function (e) {
+        var ctx = document.getElementById("average-chart");
+        if (window.averageChart) {
+            averageChart.destroy();
+        }
+        window.averageChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: $('#average-table').DataTable().column(0).data().toArray(),
+                datasets: [{
+                    label: $('#average-table').DataTable().settings().init().columns[$('#yaxis').val()].title,
+                    data: $('#average-table').DataTable().column($('#yaxis').val()).data().toArray()
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: $('#average-table').DataTable().settings().init().columns[$('#yaxis').val()].title,
+                        }
+                    }],
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Team'
+                        }
+                    }]
+                }
+            }
+        })
     })
 }
