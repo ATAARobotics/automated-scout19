@@ -4,10 +4,10 @@
  *
  * To rebuild or modify this file with the latest versions of the included
  * software please visit:
- *   https://datatables.net/download/#dt/dt-1.10.18/b-1.5.4/b-colvis-1.5.4/cr-1.5.0/fc-3.2.5/fh-3.1.4/r-2.2.2/rr-1.2.4/sc-1.5.0
+ *   https://datatables.net/download/#dt/jszip-2.5.0/pdfmake-0.1.36/dt-1.10.18/b-1.5.4/b-colvis-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fc-3.2.5/fh-3.1.4/r-2.2.2/rr-1.2.4/sc-1.5.0
  *
  * Included libraries:
- *   DataTables 1.10.18, Buttons 1.5.4, Column visibility 1.5.4, ColReorder 1.5.0, FixedColumns 3.2.5, FixedHeader 3.1.4, Responsive 2.2.2, RowReorder 1.2.4, Scroller 1.5.0
+ *   JSZip 2.5.0, pdfmake 0.1.36, DataTables 1.10.18, Buttons 1.5.4, Column visibility 1.5.4, HTML5 export 1.5.4, Print view 1.5.4, ColReorder 1.5.0, FixedColumns 3.2.5, FixedHeader 3.1.4, Responsive 2.2.2, RowReorder 1.2.4, Scroller 1.5.0
  */
 
 /*

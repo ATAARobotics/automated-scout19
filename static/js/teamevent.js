@@ -40,6 +40,10 @@ window.onload = function () {
         scrollCollapse: true,
         colReorder: true,
         scrollX: true,
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'excel'
+        ],
         columns: [
             {
                 data: "_rev",
@@ -109,6 +113,7 @@ window.onload = function () {
         fixedColumns: true,
         dom: 'Bfrtip',
         buttons: [
+            'csv', 'excel',
             {
                 extend: 'colvis',
                 collectionLayout: 'fixed four-column'

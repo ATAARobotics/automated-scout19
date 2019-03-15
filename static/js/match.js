@@ -17,6 +17,7 @@ window.onload = function () {
         fixedColumns: true,
         dom: 'Bfrtip',
         buttons: [
+            'csv', 'excel',
             {
                 extend: 'colvis',
                 collectionLayout: 'fixed four-column'
@@ -259,6 +260,7 @@ window.onload = function () {
         fixedColumns: true,
         dom: 'Bfrtip',
         buttons: [
+            'csv', 'excel',
             {
                 extend: 'colvis',
                 collectionLayout: 'fixed four-column'
