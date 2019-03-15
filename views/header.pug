@@ -8,31 +8,40 @@ html
         script(src='/js/moment.min.js')
         script(src='/js/fullcalendar.min.js')
 
-    style
-        | body {
-        |     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-        | }
-        | a {
-        |     color: #00b7ff;
-        | }
-        | .alli-blue{ background-color: #51a8ff; } .alli-red { background-color: #ff7578; }
+    style.
+        body {
+            font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+        }
+        a {
+            color: #00b7ff;
+        }
+        .alli-blue { 
+            background-color: #51a8ff;
+        } 
+        .alli-red {
+            background-color: #ff7578;
+        }
+        .alli-blue a, .alli-red a {
+            color: #4e4e4e;
+        }
+
     body
     nav.navbar.navbar-expand-md.navbar-light(style='background: #f0f0f0; font-size: 18px')
-      // Brand
-      a.navbar-brand(style='width: 13%', href='/')
-        img.img-fluid(src='/img/atalogo.png')
-      // Toggler/collapsibe Button
-      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#collapsibleNavbar')
-        span.navbar-toggler-icon
-      // Navbar links
-      #collapsibleNavbar.collapse.navbar-collapse.justify-content-end
-        ul.navbar-nav
-          li.nav-item
-            a.nav-link(href='/') Home
-          li.nav-item
-            a.nav-link(href='/cachestats') Cache Stats
-          li.nav-item
-            a.nav-link(href='/clearcache') Clear Cache
+        // Brand
+        a.navbar-brand(style='width: 13%', href='/')
+            img.img-fluid(src='/img/atalogo.png')
+        // Toggler/collapsibe Button
+        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#collapsibleNavbar')
+            span.navbar-toggler-icon
+        // Navbar links
+        #collapsibleNavbar.collapse.navbar-collapse.justify-content-end
+            ul.navbar-nav
+                li.nav-item
+                    a.nav-link(href='/') Home
+                li.nav-item
+                    a.nav-link(href='/cachestats') Cache Stats
+                li.nav-item
+                    a.nav-link(href='/clearcache') Clear Cache
     div.container-fluid
         block content
-    
+

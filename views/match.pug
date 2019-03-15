@@ -2,9 +2,30 @@ extends header
 
 block content
     include mixin
+    #red(style="display:none")= JSON.stringify(redScoutyData)
+    #blue(style="display:none")= JSON.stringify(blueScoutyData)
+    link(rel='stylesheet', href='/DataTables/datatables.min.css')
+    script(src='/DataTables/datatables.min.js')
+    script(src='/js/Chart.min.js')
+    script(src='/js/match.js')
+    style.
+        div.dt-button-collection.fixed.four-column {
+            margin-left: -500px;
+            width: 1000px;
+        }
+        div.dataTables_scrollBody table tbody tr {
+            height: auto !important;
+        }
+
     if event && match
         h1 #{event.name} Match #{match.match_number}
         .col-xs-12.col-sm-6.col-md-4
+            p Real score (TBA Prediction) [Scouting Prediction]
             +score(event, match)
+        h1 Blue
+        table#blue-table.display.cell-border(width="100%", style="table-layout: fixed;")
+        h1 Red
+        table#red-table.display.cell-border(width="100%", style="table-layout: fixed;")
+
     else
         h3 Could not fetch from TBA and there is no cached version

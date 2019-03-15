@@ -5,9 +5,9 @@ mixin score(event, match)
             a(href="https://www.thebluealliance.com/match/" + match.key style="float: right") TBA
         .card.alli-blue(style="margin: 10px 10px 10px 10px")
             .card-header(style=match.winning_alliance=='blue' ? 'font-weight: bold' : "")
-                div(style="float: left") #{match.alliances.blue.team_keys[0].substr(3)} | #{match.alliances.blue.team_keys[1].substr(3)} | #{match.alliances.blue.team_keys[2].substr(3)}
+                div(style="float: left") #[a(href="/team/" + match.alliances.blue.team_keys[0] + "/event/" + event.key) #{match.alliances.blue.team_keys[0].substr(3)}] | #[a(href="/team/" + match.alliances.blue.team_keys[1] + "/event/" + event.key) #{match.alliances.blue.team_keys[1].substr(3)}] | #[a(href="/team/" + match.alliances.blue.team_keys[2] + "/event/" + event.key) #{match.alliances.blue.team_keys[2].substr(3)}]
                 div(style="float: right") #{match.alliances.blue.score==-1 ? 'Future match' : match.alliances.blue.score} #{predictions ? `(${Math.round(predictions.match_predictions.qual[match.key].blue.score)})` : "(NA)"} #{predictedScores[match.key].blue ? `[${predictedScores[match.key].blue}]` : "[NA]"}
         .card.alli-red(style="margin: 0px 10px 10px 10px")
             .card-header(style=match.winning_alliance=='red' ? 'font-weight: bold' : "")
-                div(style="float: left") #{match.alliances.red.team_keys[0].substr(3)} | #{match.alliances.red.team_keys[1].substr(3)} | #{match.alliances.red.team_keys[2].substr(3)}
+                div(style="float: left") #[a(href="/team/" + match.alliances.red.team_keys[0] + "/event/" + event.key) #{match.alliances.red.team_keys[0].substr(3)}] | #[a(href="/team/" + match.alliances.red.team_keys[1] + "/event/" + event.key) #{match.alliances.red.team_keys[1].substr(3)}] | #[a(href="/team/" + match.alliances.red.team_keys[2] + "/event/" + event.key) #{match.alliances.red.team_keys[2].substr(3)}]
                 div(style="float: right") #{match.alliances.red.score==-1 ? 'Future match' : match.alliances.red.score} #{predictions ? `(${Math.round(predictions.match_predictions.qual[match.key].red.score)})` : "(NA)"} #{predictedScores[match.key].red ? `[${predictedScores[match.key].red}]` : "[NA]"}

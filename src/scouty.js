@@ -277,8 +277,8 @@ async function getAlliancePrediction (dbName, red, blue) {
         }
     }
     return {
-        red: redScore,
-        blue: blueScore
+        red: +redScore.toFixed(1),
+        blue: +blueScore.toFixed(1)
     }
 }
 
