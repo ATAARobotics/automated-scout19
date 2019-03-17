@@ -253,6 +253,42 @@ async function getTeamAverage (dbName, teamNumber, matchType) {
         return err;
     }
 }
+async function getPointCont (dbName, teams, matchType) {
+    try {
+        var teamPointCont = {};
+        const db = await nano.db.use(dbName);
+        for (var i = 0; i < teams.length; i++) {
+            if (!matchType) {
+                var teamPoints = 0;
+                let data = await db.find({"selector": {"_id": {"$regex": `^[q,p][0-9]*_${teams[i].team_number}*$`}}});
+                for (var b = 0; b < data.docs.length; b++) {
+                    teamPoints += getPointsEarned(data.docs[b]);
+                }
+                teamPointCont[teams[i].key] = +(teamPoints / data.docs.length).toFixed(1)
+            } else if (matchType == "p") {
+                var teamPoints = 0;
+                let data = await db.find({"selector": {"_id": {"$regex": `^p[0-9]*_${teams[i].team_number}*$`}}});
+                for (var p = 0; p < data.docs.length; p++) {
+                    teamPoints += getPointsEarned(data.docs[p]);
+                }
+                teamPointCont[teams[i].key] = +(teamPoints / data.docs.length).toFixed(1)
+            } else if (matchType == "q") {
+                var teamPoints = 0;
+                let data = await db.find({"selector": {"_id": {"$regex": `^q[0-9]*_${teams[i].team_number}*$`}}});
+                for (var q = 0; q < data.docs.length; q++) {
+                    teamPoints += getPointsEarned(data.docs[q]);
+                }
+                teamPointCont[teams[i].key] = +(teamPoints / data.docs.length).toFixed(1)
+            } else {
+                return "Invalid match type"
+            }
+        }
+        return teamPointCont;
+    } catch (err) {
+        return err;
+    }
+}
+
 async function getAlliancePrediction (dbName, red, blue) {
     var redScore = 0;
     var blueScore = 0;
@@ -287,5 +323,6 @@ module.exports = {
     getAllTeamMatches,
     getTeamPit,
     getTeamAverage,
+    getPointCont,
     getAlliancePrediction
 }

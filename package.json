@@ -4,7 +4,7 @@
   "description": "Automated scouting and data analysis for ATA team 4334",
   "main": "src/app.js",
   "scripts": {
-    "start": "node ./src/app.js",
+    "start": "NODE_ENV=production node ./src/app.js",
     "dev": "nodemon ./src/app.js"
   },
   "author": "John Brandt",

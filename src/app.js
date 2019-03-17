@@ -49,6 +49,7 @@ addView('/event/:key', 'event', async (req) => {
     var allMatches = await tba.get(`/event/${req.params.key}/matches/simple`);
     var teams = await tba.get(`/event/${req.params.key}/teams/simple`);
     var matches = [];
+    var teamPointCont = await scouty.getPointCont(req.params.key.substr(4, 7) + req.params.key.substr(0, 4), teams);
     var predictedScores = {};
     if (allMatches) {
         for (i = 0; i < allMatches.length; i++) {
@@ -60,15 +61,10 @@ addView('/event/:key', 'event', async (req) => {
             return a.match_number - b.match_number
         });
         for (var i = 0; i < matches.length; i++) {
-            var red = [];
-            var blue = [];
-            for (var b = 0; b < 3; b++) {
-                blue.push(matches[i].alliances.blue.team_keys[b].substr(3));
+            predictedScores[matches[i].key] = { 
+                red: +(teamPointCont[matches[i].alliances.red.team_keys[0]] + teamPointCont[matches[i].alliances.red.team_keys[1]] + teamPointCont[matches[i].alliances.red.team_keys[2]]).toFixed(1),
+                blue: +(teamPointCont[matches[i].alliances.blue.team_keys[0]] + teamPointCont[matches[i].alliances.blue.team_keys[1]] + teamPointCont[matches[i].alliances.blue.team_keys[2]]).toFixed(1)
             }
-            for (var r = 0; r < 3; r++) {
-                red.push(matches[i].alliances.red.team_keys[r].substr(3));
-            }
-            predictedScores[matches[i].key] = await scouty.getAlliancePrediction(req.params.key.substr(4, 7) + req.params.key.substr(0, 4), red, blue);
         }
     }
     if (teams) {
