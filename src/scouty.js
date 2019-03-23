@@ -39,8 +39,8 @@ function getAveragePickupTime(times) {
 
 function getPointsEarned(full) {
     var totalPoints = 0;
-    totalPoints += (full.sandstormCargoCargoship + full.sandstormCargoRocket + full.teleopCargoshipCargo + full.teleopRocket1Cargo + full.teleopRocket2Cargo + full.teleopRocket3Cargo) * 3;
-    totalPoints += (full.sandstormHatchCargoship + full.sandstormHatchRocket + full.teleopCargoshipHatch + full.teleopRocket1Hatch + full.teleopRocket2Hatch + full.teleopRocket3Hatch) * 2;
+    totalPoints += (full.teleopCargoshipCargo + full.teleopRocket1Cargo + full.teleopRocket2Cargo + full.teleopRocket3Cargo) * 3;
+    totalPoints += (full.teleopCargoshipHatch + full.teleopRocket1Hatch + full.teleopRocket2Hatch + full.teleopRocket3Hatch) * 2;
     if (full.crossedBaseline == 1 && full.startingLevel == 1) {
         totalPoints += 3;
     }
@@ -60,8 +60,8 @@ function getPointsEarned(full) {
 }
 
 function addData(orig) {
-    orig.totalHatch = orig.sandstormHatchCargoship + orig.sandstormHatchRocket + orig.teleopCargoshipHatch + orig.teleopRocket1Hatch + orig.teleopRocket2Hatch + orig.teleopRocket3Hatch;
-    orig.totalCargo = orig.sandstormCargoCargoship + orig.sandstormCargoRocket + orig.teleopCargoshipCargo + orig.teleopRocket1Cargo + orig.teleopRocket2Cargo + orig.teleopRocket3Cargo;
+    orig.totalHatch = orig.teleopCargoshipHatch + orig.teleopRocket1Hatch + orig.teleopRocket2Hatch + orig.teleopRocket3Hatch;
+    orig.totalCargo = orig.teleopCargoshipCargo + orig.teleopRocket1Cargo + orig.teleopRocket2Cargo + orig.teleopRocket3Cargo;
     orig.averageCargoPickupTime = getAveragePickupTime(orig.teleopCargoTime);
     orig.averageCargoDropoffTime = getAverageDropoffTime(orig.teleopCargoTime);
     orig.averageHatchPickupTime = getAveragePickupTime(orig.teleopHatchTime);
@@ -141,10 +141,6 @@ async function getTeamAverage (dbName, teamNumber, matchType) {
         let matches = await getAllTeamMatches(dbName, teamNumber, matchType);
         var startingLevel = [];
         var crossedBaseline = 0;
-        var sandstormCargoCargoship = 0;
-        var sandstormCargoRocket = 0;
-        var sandstormHatchCargoship = 0;
-        var sandstormHatchRocket = 0;
         var teleopCargoshipCargo = 0;
         var teleopRocket1Cargo = 0;
         var teleopRocket2Cargo = 0;
@@ -177,10 +173,6 @@ async function getTeamAverage (dbName, teamNumber, matchType) {
         for (i = 0; i < matches.length; i++) {
             startingLevel.push(matches[i].startingLevel);
             crossedBaseline += matches[i].crossedBaseline;
-            sandstormCargoCargoship += matches[i].sandstormCargoCargoship;
-            sandstormCargoRocket += matches[i].sandstormCargoRocket;
-            sandstormHatchCargoship += matches[i].sandstormHatchCargoship;
-            sandstormHatchRocket += matches[i].sandstormHatchRocket;
             teleopCargoshipCargo += matches[i].teleopCargoshipCargo;
             teleopRocket1Cargo += matches[i].teleopRocket1Cargo;
             teleopRocket2Cargo += matches[i].teleopRocket2Cargo;
@@ -215,10 +207,6 @@ async function getTeamAverage (dbName, teamNumber, matchType) {
             teamNumber: teamNumber,
             startingLevel: mode(startingLevel) || 0,
             crossedBaseline: +((crossedBaseline / matches.length) * 100).toFixed(1) || 0,
-            sandstormCargoCargoship: +((sandstormCargoCargoship / matches.length) * 100).toFixed(1) || 0,
-            sandstormCargoRocket: +((sandstormCargoRocket / matches.length) * 100).toFixed(1) || 0,
-            sandstormHatchCargoship: +((sandstormHatchCargoship / matches.length) * 100).toFixed(1) || 0,
-            sandstormHatchRocket: +((sandstormHatchRocket / matches.length) * 100).toFixed(1) || 0,
             teleopCargoshipCargo: +(teleopCargoshipCargo / matches.length).toFixed(1) || 0,
             teleopRocket1Cargo: +(teleopRocket1Cargo / matches.length).toFixed(1) || 0,
             teleopRocket2Cargo: +(teleopRocket2Cargo / matches.length).toFixed(1) || 0,

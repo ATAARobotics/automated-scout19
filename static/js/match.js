@@ -50,46 +50,6 @@ window.onload = function () {
                 defaultContent: 0
             },
             {
-                data: "sandstormCargoCargoship",
-                title: "Sandstorm Cargo Cargoship",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormCargoCargoshipTime",
-                title: "Sandstorm Cargo Cargoship Time",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormCargoRocket",
-                title: "Sandstorm Cargo Rocket",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormCargoRocketTime",
-                title: "Sandstorm Cargo Rocket Time",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormHatchCargoship",
-                title: "Sandstorm Hatch Cargoship",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormHatchCargoshipTime",
-                title: "Sandstorm Hatch Cargoship Time",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormHatchRocket",
-                title: "Sandstorm Hatch Rocket",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormHatchRocketTime",
-                title: "Sandstorm Hatch Rocket Time",
-                defaultContent: 0
-            },
-            {
                 data: "teleopCargoshipCargo",
                 title: "Cargoship Cargo",
                 defaultContent: 0
@@ -290,46 +250,6 @@ window.onload = function () {
             {
                 data: "crossedBaselineTime",
                 title: "Baseline Time",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormCargoCargoship",
-                title: "Sandstorm Cargo Cargoship",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormCargoCargoshipTime",
-                title: "Sandstorm Cargo Cargoship Time",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormCargoRocket",
-                title: "Sandstorm Cargo Rocket",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormCargoRocketTime",
-                title: "Sandstorm Cargo Rocket Time",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormHatchCargoship",
-                title: "Sandstorm Hatch Cargoship",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormHatchCargoshipTime",
-                title: "Sandstorm Hatch Cargoship Time",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormHatchRocket",
-                title: "Sandstorm Hatch Rocket",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormHatchRocketTime",
-                title: "Sandstorm Hatch Rocket Time",
                 defaultContent: 0
             },
             {

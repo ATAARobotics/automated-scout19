@@ -37,26 +37,6 @@ window.onload = function() {
                 defaultContent: 0
             },
             {
-                data: 'sandstormCargoCargoship',
-                title: 'Sandstorm Cargo Cargoship',
-                defaultContent: 0
-            },
-            {
-                data: 'sandstormCargoRocket',
-                title: 'Sandstorm Cargo Rocket',
-                defaultContent: 0
-            },
-            {
-                data: 'sandstormHatchCargoship',
-                title: 'Sandstorm Hatch Cargoship',
-                defaultContent: 0
-            },
-            {
-                data: 'sandstormHatchRocket',
-                title: 'Sandstorm Hatch Rocket',
-                defaultContent: 0
-            },
-            {
                 data: 'teleopCargoshipCargo',
                 title: 'Cargoship Cargo',
                 defaultContent: 10

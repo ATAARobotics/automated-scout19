@@ -55,11 +55,6 @@ window.onload = function () {
                 defaultContent: "No Name"
             },
             {
-                data: "vision",
-                title: "Vision",
-                defaultContent: 0
-            },
-            {
                 data: "robotAppearance",
                 title: "Appearance",
                 defaultContent: 0
@@ -143,46 +138,6 @@ window.onload = function () {
             {
                 data: "crossedBaselineTime",
                 title: "Baseline Time",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormCargoCargoship",
-                title: "Sandstorm Cargo Cargoship",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormCargoCargoshipTime",
-                title: "Sandstorm Cargo Cargoship Time",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormCargoRocket",
-                title: "Sandstorm Cargo Rocket",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormCargoRocketTime",
-                title: "Sandstorm Cargo Rocket Time",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormHatchCargoship",
-                title: "Sandstorm Hatch Cargoship",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormHatchCargoshipTime",
-                title: "Sandstorm Hatch Cargoship Time",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormHatchRocket",
-                title: "Sandstorm Hatch Rocket",
-                defaultContent: 0
-            },
-            {
-                data: "sandstormHatchRocketTime",
-                title: "Sandstorm Hatch Rocket Time",
                 defaultContent: 0
             },
             {
@@ -385,18 +340,6 @@ window.onload = function () {
         timelineArray.push({content: 'Sandstorm', type: 'background', start: moment('02:15.0', "mm:ss.S"), end: moment('02:30.0', "mm:ss.S")});
         if (match.crossedBaselineTime) {
             timelineArray.push({content: 'Crossed Baseline', title: match.crossedBaselineTime, start: moment(match.crossedBaselineTime, "mm:ss.S")});
-        }
-        if (match.sandstormCargoCargoshipTime) {
-            timelineArray.push({content: "Cargo In Cargoship", title: match.sandstormCargoCargoshipTime, start: moment(match.sandstormCargoCargoshipTime, "mm:ss.S")})
-        }
-        if (match.sandstormCargoRocketTime) {
-            timelineArray.push({content: "Cargo In Rocket", title: match.sandstormCargoRocketTime, start: moment(match.sandstormCargoRocketTime, "mm:ss.S")})
-        }
-        if (match.sandstormHatchCargoshipTime) {
-            timelineArray.push({content: "Hatch In Cargoship", title: match.sandstormHatchCargoshipTime, start: moment(match.sandstormHatchCargoshipTime, "mm:ss.S")})
-        }
-        if (match.sandstormHatchRocketTime) {
-            timelineArray.push({content: "Hatch In Rocket", title: match.sandstormHatchRocketTime, start: moment(match.sandstormHatchRocketTime, "mm:ss.S")})
         }
         for (var i = 0; i < match.teleopCargoTime.length; i++) {
             timelineArray.push({content: `Cargo In ${match.teleopCargoTime[i][2]}`, title: `${match.teleopCargoTime[i][0]} - ${match.teleopCargoTime[i][1]}`, start: moment(match.teleopCargoTime[i][1], "mm:ss.S"), end: moment(match.teleopCargoTime[i][0], "mm:ss.S")})
