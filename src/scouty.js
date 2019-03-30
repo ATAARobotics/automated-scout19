@@ -167,7 +167,9 @@ async function getTeamPit (dbName, teamNumber) {
         let revs = await db.get(`pit_${teamNumber}`, {revs_info: true});
         var allRevs = [];
         for (var i = 0; i<revs._revs_info.length; i++) {
-            allRevs.push(await db.get(`pit_${teamNumber}`, {rev: revs._revs_info[i].rev, attachments: true}))
+            if (revs._revs_info[i].status == "available") {
+                allRevs.push(await db.get(`pit_${teamNumber}`, {rev: revs._revs_info[i].rev, attachments: true}))
+            }
         }
         return allRevs;
     } catch (err) {
