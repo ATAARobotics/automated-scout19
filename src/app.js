@@ -133,6 +133,10 @@ addView('/event/:eventKey/compare', 'teamCompare', async (req) => {
     }
 })
 
+addView('/event/:eventKey/all', 'viewAll', async (req) => {
+    return {all: await scouty.getAll(req.params.eventKey.substr(4, 7) + req.params.eventKey.substr(0, 4))}
+})
+
 app.get('/test', async (req, res) => {
     let test = await scouty.getTeamAverage('week02019', '501');
     res.send(test);

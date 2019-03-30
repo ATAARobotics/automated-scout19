@@ -6,6 +6,7 @@ block content
             a(href="https://www.thebluealliance.com/event/" + event.key style="padding-left:15px")
                 img(src="https://www.thebluealliance.com/images/logo_square_512.png" height="25px" width="25px" style="border-radius: 25px;")
                 a.btn.btn-info(href='/event/' + event.key + "/compare", role='button', style='margin-left: 15px') Compare Teams
+                a.btn.btn-info(href='/event/' + event.key + "/all", role='button', style='margin-left: 15px') All Data
         .row
             each team in teams
                 .col-xs-4.col-sm-3.col-md-2

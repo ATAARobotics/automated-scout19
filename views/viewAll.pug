@@ -1,0 +1,12 @@
+extends header
+
+block content
+
+    link(rel='stylesheet', href='/DataTables/datatables.min.css')
+    script(src='/DataTables/datatables.min.js')
+    script(src='/js/Chart.min.js')
+    script(src='/js/viewAll.js')
+
+    h1 All Matches
+    #all(style="display:none")= JSON.stringify(all)
+    table#all-table.display.cell-border(width="100%", style="table-layout: fixed;")

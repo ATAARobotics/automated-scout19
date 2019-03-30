@@ -136,8 +136,13 @@ window.onload = function () {
                 defaultContent: 0
             },
             {
-                data: "crossedBaselineTime",
-                title: "Baseline Time",
+                data: "sandstormHatches",
+                title: "Sandstorm Hatches",
+                defaultContent: 0
+            },
+            {
+                data: "sandstormCargo",
+                title: "Sandstorm Cargo",
                 defaultContent: 0
             },
             {
@@ -263,6 +268,16 @@ window.onload = function () {
             {
                 data: "averageHatchDropoffTime",
                 title: "Hatch Dropoff Time",
+                defaultContent: 0
+            },
+            {
+                data: "hatchCycleTime",
+                title: "Hatch Cycle Time",
+                defaultContent: 0
+            },
+            {
+                data: "cargoCycleTime",
+                title: "Cargo Cycle Time",
                 defaultContent: 0
             },
             {
