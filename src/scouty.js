@@ -5,26 +5,38 @@ const DB_ADDRESS = fs.readFileSync('DB_ADDRESS', "utf8");
 const nano = require("nano")(`http://${DB_USERNAME}:${DB_PASSWORD}@${DB_ADDRESS}:5984`);
 const moment = require("moment");
 
-function getAverageDropoffTime(times) {
+function getTotalSuccessfulDropoffTime(times) {
     var sum = 0;
     if (times.length == 0) {
         return "NA"
     }
     for (var i = 0; i<times.length; i++) {
         if (times[i][2] != "dr") {
-            var momentTimeStart = moment(times[i][0], "mm:ss.S");
-            var momentTimeEnd = moment(times[i][1], "mm:ss.S");
-            sum += momentTimeStart.diff(momentTimeEnd);
+            var momentTimeStart = moment.duration(`00:${times[i][0]}00`).asSeconds();
+            var momentTimeEnd = moment.duration(`00:${times[i][1]}00`).asSeconds();
+            sum += momentTimeStart - momentTimeEnd
         }
     }
-    sum /= times.length;
-    return +(moment(sum).format("s.S"));
+    return +(sum).toFixed(1);
+}
+
+function getTotalDropoffTime(times) {
+    var sum = 0;
+    if (times.length == 0) {
+        return "NA"
+    }
+    for (var i = 0; i<times.length; i++) {
+        var momentTimeStart = moment.duration(`00:${times[i][0]}00`).asSeconds();
+        var momentTimeEnd = moment.duration(`00:${times[i][1]}00`).asSeconds();
+        sum += momentTimeStart - momentTimeEnd
+    }
+    return +(sum).toFixed(1);
 }
 
 function findTime(orig, compareTime) {
     var temp = moment.duration('00:02:30').asSeconds();
     for (var i = 0; i < orig.teleopCargoTime.length; i++) {
-        var temp2 = moment.duration(`00:${orig.teleopCargoTime[i][1]}`).asSeconds();
+        var temp2 = moment.duration(`00:${orig.teleopCargoTime[i][1]}00`).asSeconds();
         if (temp2 <= compareTime) {
             break;
         }
@@ -33,7 +45,7 @@ function findTime(orig, compareTime) {
         }
     }
     for (var i = 0; i < orig.teleopHatchTime.length; i++) {
-        var temp2 = moment.duration(`00:${orig.teleopHatchTime[i][1]}`).asSeconds();
+        var temp2 = moment.duration(`00:${orig.teleopHatchTime[i][1]}00`).asSeconds();
         if (temp2 <= compareTime) {
             break;
         }
@@ -44,24 +56,23 @@ function findTime(orig, compareTime) {
     return +(temp)
 }
 
-function getAveragePickupTime(orig, table) {
+function getTotalPickupTime(orig, table) {
     var sum = 0;
     if (table.length == 0) {
         return "NA"
     }
     for (var i = 0; i<table.length; i++) {
-        var momentTimeStart = findTime(orig, moment.duration(`00:${table[i][0]}`).asSeconds());
-        var momentTimeEnd = moment.duration(`00:${table[i][0]}`).asSeconds();
+        var momentTimeStart = findTime(orig, moment.duration(`00:${table[i][0]}00`).asSeconds());
+        var momentTimeEnd = moment.duration(`00:${table[i][0]}00`).asSeconds();
         sum += momentTimeStart - momentTimeEnd;
     }
-    sum /= (table.length);
     return +(sum.toFixed(1));
 }
 
 function getSandstormHatches(full) {
     var sandstormHatches = 0;
     for (var i = 0; i < full.teleopHatchTime.length; i++) {
-        if (moment.duration(`00:${full.teleopHatchTime[i][1]}`).asSeconds() >= 135) {
+        if (moment.duration(`00:${full.teleopHatchTime[i][1]}00`).asSeconds() >= 135) {
             sandstormHatches++
         }
     }
@@ -71,7 +82,7 @@ function getSandstormHatches(full) {
 function getSandstormCargo(full) {
     var sandstormCargo = 0;
     for (var i = 0; i < full.teleopCargoTime.length; i++) {
-        if (moment.duration(`00:${full.teleopCargoTime[i][1]}`).asSeconds() >= 135) {
+        if (moment.duration(`00:${full.teleopCargoTime[i][1]}00`).asSeconds() >= 135) {
             sandstormCargo++
         }
     }
@@ -102,19 +113,27 @@ function getPointsEarned(full) {
 }
 
 function addData(orig) {
+    var hatchTotalPickupTime = getTotalPickupTime(orig, orig.teleopHatchTime);
+    var hatchTotalDropoffTime = getTotalDropoffTime(orig.teleopHatchTime);
+    var hatchTotalSuccessfulDropoffTime = getTotalSuccessfulDropoffTime(orig.teleopHatchTime);
+    var cargoTotalPickupTime = getTotalPickupTime(orig, orig.teleopCargoTime);
+    var cargoTotalDropoffTime = getTotalDropoffTime(orig.teleopCargoTime);
+    var cargoTotalSuccessfulDropoffTime = getTotalSuccessfulDropoffTime(orig.teleopCargoTime);
     orig.sandstormHatches = getSandstormHatches(orig)
     orig.sandstormCargo = getSandstormCargo(orig)
     orig.totalHatch = orig.teleopCargoshipHatch + orig.teleopRocket1Hatch + orig.teleopRocket2Hatch + orig.teleopRocket3Hatch;
     orig.totalCargo = orig.teleopCargoshipCargo + orig.teleopRocket1Cargo + orig.teleopRocket2Cargo + orig.teleopRocket3Cargo;
-    orig.averageCargoPickupTime = getAveragePickupTime(orig, orig.teleopCargoTime);
-    orig.averageCargoDropoffTime = getAverageDropoffTime(orig.teleopCargoTime);
-    orig.averageHatchPickupTime = getAveragePickupTime(orig, orig.teleopHatchTime);
-    orig.averageHatchDropoffTime = getAverageDropoffTime(orig.teleopHatchTime);
-    orig.hatchCycleTime = orig.averageHatchPickupTime != "NA" || orig.averageHatchDropoffTime != "NA" ? +((orig.averageHatchPickupTime + orig.averageHatchDropoffTime).toFixed(1)) : "NA" ;
-    orig.cargoCycleTime = orig.averageCargoPickupTime != "NA" || orig.averageCargoDropoffTime != "NA" ? +((orig.averageCargoPickupTime + orig.averageCargoDropoffTime).toFixed(1)) : "NA";
+    orig.averageCargoPickupTime = +(cargoTotalPickupTime / orig.teleopCargoTime.length).toFixed(1) || "NA";
+    orig.averageCargoDropoffTime = +(cargoTotalSuccessfulDropoffTime / orig.teleopCargoTime.length).toFixed(1) || "NA";
+    orig.averageHatchPickupTime = +(hatchTotalPickupTime / orig.teleopHatchTime.length).toFixed(1) || "NA";
+    orig.averageHatchDropoffTime = +(hatchTotalSuccessfulDropoffTime / orig.teleopHatchTime.length).toFixed(1) || "NA";
+    orig.hatchCycleTime = orig.averageHatchPickupTime != "NA" && orig.averageHatchDropoffTime != "NA" ? +((orig.averageHatchPickupTime + orig.averageHatchDropoffTime).toFixed(1)) : "NA" ;
+    orig.cargoCycleTime = orig.averageCargoPickupTime != "NA" && orig.averageCargoDropoffTime != "NA" ? +((orig.averageCargoPickupTime + orig.averageCargoDropoffTime).toFixed(1)) : "NA";
     orig.climbingDuration = (orig.climbingTime.length != 0 ? moment(moment(orig.climbingTime[0], "mm:ss.S").diff(moment(orig.climbingTime[1], "mm:ss.S"))).format("s.S") : "150");
     orig.cargoSuccessPercent = +(((orig.teleopCargoshipCargo + orig.teleopRocket1Cargo + orig.teleopRocket2Cargo + orig.teleopRocket3Cargo) / (orig.teleopCargoshipCargo + orig.teleopRocket1Cargo + orig.teleopRocket2Cargo + orig.teleopRocket3Cargo + orig.teleopDroppedCargo) * 100).toFixed(1)) || 0;
     orig.hatchSuccessPercent = +(((orig.teleopCargoshipHatch + orig.teleopRocket1Hatch + orig.teleopRocket2Hatch + orig.teleopRocket3Hatch) / (orig.teleopCargoshipHatch + orig.teleopRocket1Hatch + orig.teleopRocket2Hatch + orig.teleopRocket3Hatch + orig.teleopDroppedHatch) * 100).toFixed(1)) || 0;
+    orig.cargoEffectiveness = +((cargoTotalPickupTime + cargoTotalSuccessfulDropoffTime) / (cargoTotalPickupTime + cargoTotalDropoffTime) * 100).toFixed(1) || "NA";
+    orig.hatchEffectiveness = +((hatchTotalPickupTime + hatchTotalSuccessfulDropoffTime) / (hatchTotalPickupTime + hatchTotalDropoffTime) * 100).toFixed(1) || "NA";
     orig.pointsEarned = getPointsEarned(orig);
     return orig;
 }
@@ -217,6 +236,8 @@ async function getTeamAverage (dbName, teamNumber, matchType) {
         var cargoCycleTime = 0;
         var cargoCycleTimeNum = matches.length;
         var cargoSuccessPercent = 0;
+        var cargoEffectivenessNum = matches.length;
+        var cargoEffectiveness = 0;
         var totalCargo = 0;
         var teleopCargoshipHatch = 0;
         var teleopRocket1Hatch = 0;
@@ -230,6 +251,8 @@ async function getTeamAverage (dbName, teamNumber, matchType) {
         var hatchCycleTime = 0;
         var hatchCycleTimeNum = matches.length;
         var hatchSuccessPercent = 0;
+        var hatchEffectivenessNum = matches.length;
+        var hatchEffectiveness = 0;
         var totalHatch = 0;
         var climbingDuration = 0;
         var pointsEarned = 0;
@@ -256,6 +279,7 @@ async function getTeamAverage (dbName, teamNumber, matchType) {
             matches[i].averageCargoDropoffTime == "NA" ? cargoDropoffTimeNum-- : cargoDropoffTime += matches[i].averageCargoDropoffTime;
             matches[i].cargoCycleTime == "NA" ? cargoCycleTimeNum-- : cargoCycleTime += matches[i].cargoCycleTime
             cargoSuccessPercent += matches[i].cargoSuccessPercent || 0;
+            matches[i].cargoEffectiveness== "NA" ? cargoEffectivenessNum-- : cargoEffectiveness += matches[i].cargoEffectiveness;
             totalCargo += matches[i].totalCargo;
             teleopCargoshipHatch += matches[i].teleopCargoshipHatch;
             teleopRocket1Hatch += matches[i].teleopRocket1Hatch;
@@ -266,6 +290,7 @@ async function getTeamAverage (dbName, teamNumber, matchType) {
             matches[i].averageHatchDropoffTime == "NA" ? hatchDropoffTimeNum-- : hatchDropoffTime += matches[i].averageHatchDropoffTime;
             matches[i].hatchCycleTime == "NA" ? hatchCycleTimeNum-- : hatchCycleTime += matches[i].hatchCycleTime
             hatchSuccessPercent += matches[i].hatchSuccessPercent || 0;
+            matches[i].hatchEffectiveness== "NA" ? hatchEffectivenessNum-- : hatchEffectiveness += matches[i].hatchEffectiveness;
             totalHatch += matches[i].totalHatch;
             climbingDuration = matches[i].climbingDuration;
             pointsEarned += matches[i].pointsEarned;
@@ -294,6 +319,7 @@ async function getTeamAverage (dbName, teamNumber, matchType) {
             cargoDropoffTime: +(cargoDropoffTime / cargoDropoffTimeNum).toFixed(1) || 0,
             cargoCycleTime: +(cargoCycleTime / cargoCycleTimeNum).toFixed(1) || 0,
             cargoSuccessPercent: +(cargoSuccessPercent / matches.length).toFixed(1) || 0,
+            cargoEffectiveness: +(cargoEffectiveness / matches.length).toFixed(1) ||0,
             totalCargo: +(totalCargo / matches.length).toFixed(1) || 0,
             teleopCargoshipHatch: +(teleopCargoshipHatch / matches.length).toFixed(1) || 0,
             teleopRocket1Hatch: +(teleopRocket1Hatch / matches.length).toFixed(1) || 0,
@@ -304,6 +330,7 @@ async function getTeamAverage (dbName, teamNumber, matchType) {
             hatchDropoffTime: +(hatchDropoffTime/ hatchDropoffTimeNum).toFixed(1) || 0,
             hatchCycleTime: +(hatchCycleTime / hatchCycleTimeNum).toFixed(1) || 0,
             hatchSuccessPercent: +(hatchSuccessPercent / matches.length).toFixed(1) || 0,
+            hatchEffectiveness: +(hatchEffectiveness / matches.length).toFixed(1) || 0,
             totalHatch: +(totalHatch / matches.length).toFixed(1) || 0,
             climbingDuration: +(climbingDuration / matches.length).toFixed(1) || 0,
             pointsEarned: +(pointsEarned / matches.length).toFixed(1) || 0,

@@ -92,6 +92,11 @@ window.onload = function() {
                 defaultContent: 0
             },
             {
+                data: "cargoEffectiveness",
+                title: "Cargo Effectiveness",
+                defaultContent: 0
+            },
+            {
                 data: 'totalCargo',
                 title: 'Total Cargo',
                 defaultContent: 0
@@ -139,6 +144,11 @@ window.onload = function() {
             {
                 data: 'hatchSuccessPercent',
                 title: 'Hatch Success Percent',
+                defaultContent: 0
+            },
+            {
+                data: "hatchEffectiveness",
+                title: "Hatch Effectiveness",
                 defaultContent: 0
             },
             {

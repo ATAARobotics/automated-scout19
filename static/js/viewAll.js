@@ -203,6 +203,16 @@ window.onload = function () {
                 defaultContent: 0
             },
             {
+                data: "cargoEffectiveness",
+                title: "Cargo Effectiveness",
+                defaultContent: 0
+            },
+            {
+                data: "hatchEffectiveness",
+                title: "Hatch Effectiveness",
+                defaultContent: 0
+            },
+            {
                 data: "pointsEarned",
                 title: "Points Earned",
                 defaultContent: 0
